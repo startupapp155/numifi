@@ -22,6 +22,11 @@ import {
   FileText,
   Users,
   Clock,
+  Timer,
+  Target,
+  Search,
+  DollarSign,
+  ArrowDown,
 } from "lucide-react";
 
 // ─── Hooks ───────────────────────────────────────────────────────────────────
@@ -104,7 +109,6 @@ function Navbar() {
       }}
     >
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-6">
-        {/* Logo */}
         <a
           href="#"
           className="text-xl font-bold tracking-tight"
@@ -113,7 +117,6 @@ function Navbar() {
           Numifi
         </a>
 
-        {/* Desktop Nav */}
         <div className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
             <a
@@ -127,7 +130,6 @@ function Navbar() {
           ))}
         </div>
 
-        {/* Right side */}
         <div className="flex items-center gap-3">
           <button
             onClick={toggle}
@@ -142,10 +144,9 @@ function Navbar() {
             href="#signup"
             className="hidden rounded-full bg-blue px-5 py-2.5 text-[0.8125rem] font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25 sm:inline-flex items-center gap-2"
           >
-            Get Early Access
+            Join Waitlist
           </a>
 
-          {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="flex h-9 w-9 items-center justify-center rounded-lg md:hidden"
@@ -157,7 +158,6 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <div
         className={`overflow-hidden transition-all duration-300 md:hidden ${
           mobileOpen ? "max-h-72" : "max-h-0"
@@ -184,7 +184,7 @@ function Navbar() {
             onClick={() => setMobileOpen(false)}
             className="block rounded-full bg-blue mt-2 px-4 py-2.5 text-center text-sm font-medium text-white"
           >
-            Get Early Access
+            Join Waitlist
           </a>
         </div>
       </div>
@@ -243,7 +243,6 @@ function HeroMockup() {
             "0 25px 80px -12px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.02)",
         }}
       >
-        {/* Window chrome */}
         <div
           className="flex items-center gap-2 px-5 py-3.5 border-b"
           style={{ borderColor: "var(--border)" }}
@@ -269,28 +268,19 @@ function HeroMockup() {
           {/* PDF side */}
           <div className="p-6 md:p-8 md:border-r" style={{ borderColor: "var(--border)" }}>
             <div className="flex items-center gap-2.5 mb-6">
-              <div
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-500/10"
-              >
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-500/10">
                 <FileText size={15} className="text-red-500" />
               </div>
               <div>
-                <div
-                  className="text-xs font-semibold"
-                  style={{ color: "var(--text-primary)" }}
-                >
+                <div className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>
                   bank_statement_march.pdf
                 </div>
-                <div
-                  className="text-[10px]"
-                  style={{ color: "var(--text-tertiary)" }}
-                >
+                <div className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
                   2 pages &middot; 145 KB
                 </div>
               </div>
             </div>
 
-            {/* Animated progress indicator */}
             <div className="mb-5 flex items-center gap-2">
               <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "var(--border)" }}>
                 <div className="h-full w-full bg-gradient-to-r from-blue to-purple-500 rounded-full shimmer-line" />
@@ -318,10 +308,7 @@ function HeroMockup() {
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
                 <FileSpreadsheet size={14} className="text-blue" />
-                <span
-                  className="text-xs font-semibold"
-                  style={{ color: "var(--text-primary)" }}
-                >
+                <span className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>
                   Extracted Data
                 </span>
               </div>
@@ -330,7 +317,6 @@ function HeroMockup() {
               </span>
             </div>
 
-            {/* Table header */}
             <div
               className="grid grid-cols-[60px_1fr_80px] gap-3 px-3 py-2 text-[10px] font-semibold uppercase tracking-wider mb-1"
               style={{ color: "var(--text-tertiary)" }}
@@ -342,27 +328,21 @@ function HeroMockup() {
 
             <div className="space-y-1">
               {[
-                { date: "03/01", desc: "Starbucks Coffee", amt: "-$5.40", cat: "Food" },
-                { date: "03/02", desc: "Amazon Prime", amt: "-$14.99", cat: "Subscription" },
-                { date: "03/03", desc: "Direct Deposit — Payroll", amt: "+$3,200.00", cat: "Income" },
-                { date: "03/04", desc: "Netflix", amt: "-$15.99", cat: "Subscription" },
-                { date: "03/05", desc: "Whole Foods Market", amt: "-$67.32", cat: "Groceries" },
+                { date: "03/01", desc: "Starbucks Coffee", amt: "-$5.40" },
+                { date: "03/02", desc: "Amazon Prime", amt: "-$14.99" },
+                { date: "03/03", desc: "Direct Deposit — Payroll", amt: "+$3,200.00" },
+                { date: "03/04", desc: "Netflix", amt: "-$15.99" },
+                { date: "03/05", desc: "Whole Foods Market", amt: "-$67.32" },
               ].map((row) => (
                 <div
                   key={row.desc}
                   className="grid grid-cols-[60px_1fr_80px] gap-3 items-center rounded-lg px-3 py-2.5 text-xs transition-colors"
                   style={{ backgroundColor: "var(--bg-alt)" }}
                 >
-                  <span
-                    className="font-mono text-[11px]"
-                    style={{ color: "var(--text-tertiary)" }}
-                  >
+                  <span className="font-mono text-[11px]" style={{ color: "var(--text-tertiary)" }}>
                     {row.date}
                   </span>
-                  <span
-                    className="font-medium truncate"
-                    style={{ color: "var(--text-primary)" }}
-                  >
+                  <span className="font-medium truncate" style={{ color: "var(--text-primary)" }}>
                     {row.desc}
                   </span>
                   <span
@@ -371,11 +351,7 @@ function HeroMockup() {
                         ? "text-emerald-600 dark:text-emerald-400"
                         : ""
                     }`}
-                    style={
-                      row.amt.startsWith("+")
-                        ? {}
-                        : { color: "var(--text-secondary)" }
-                    }
+                    style={row.amt.startsWith("+") ? {} : { color: "var(--text-secondary)" }}
                   >
                     {row.amt}
                   </span>
@@ -383,7 +359,6 @@ function HeroMockup() {
               ))}
             </div>
 
-            {/* Chat bubble */}
             <div className="mt-5 flex items-start gap-2.5">
               <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue to-purple-500">
                 <Sparkles size={12} className="text-white" />
@@ -412,7 +387,6 @@ function HeroMockup() {
 function Hero() {
   return (
     <section className="relative pt-32 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
-      {/* Decorative orbs */}
       <div className="orb orb-blue -top-[200px] -left-[200px]" />
       <div className="orb orb-purple top-[100px] -right-[150px]" />
       <div className="orb orb-cyan -bottom-[100px] left-[30%]" />
@@ -431,19 +405,20 @@ function Hero() {
         </div>
 
         <h1
-          className="mx-auto max-w-3xl text-[2.75rem] font-bold leading-[1.08] tracking-tight sm:text-[3.5rem] lg:text-[4.25rem]"
+          className="mx-auto max-w-4xl text-[2.5rem] font-bold leading-[1.08] tracking-tight sm:text-[3.25rem] lg:text-[3.75rem]"
           style={{ color: "var(--text-primary)" }}
         >
-          Your finances, finally{" "}
-          <span className="gradient-text">organized.</span>
+          Turn messy financial PDFs into{" "}
+          <span className="gradient-text">clean, organized data</span> — in seconds
         </h1>
 
         <p
-          className="mx-auto mt-6 max-w-xl text-lg leading-relaxed"
+          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed"
           style={{ color: "var(--text-secondary)" }}
         >
-          Upload any financial PDF. Get clean data, instant insights, and an AI
-          that answers your questions.
+          Upload bank statements, invoices, receipts, or tax forms. Numifi extracts every
+          transaction, categorizes your spending automatically, and lets you chat with your
+          financial data like talking to an accountant who never sleeps.
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -473,6 +448,13 @@ function Hero() {
           </a>
         </div>
 
+        <p
+          className="mt-6 text-sm"
+          style={{ color: "var(--text-tertiary)" }}
+        >
+          No credit card required. First 100 users get Pro free for 3 months.
+        </p>
+
         <HeroMockup />
       </div>
     </section>
@@ -483,7 +465,7 @@ function Hero() {
 
 function TrustBar() {
   const ref = useReveal(0.2);
-  const banks = ["Chase", "Bank of America", "HSBC", "Wells Fargo", "Citi"];
+  const brands = ["Chase", "Bank of America", "Wells Fargo", "HSBC", "PayPal", "Stripe", "QuickBooks"];
 
   return (
     <section
@@ -499,16 +481,16 @@ function TrustBar() {
           className="text-xs font-medium uppercase tracking-[0.2em]"
           style={{ color: "var(--text-tertiary)" }}
         >
-          Works with statements from
+          Works with documents from
         </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-16 gap-y-4">
-          {banks.map((bank) => (
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
+          {brands.map((brand) => (
             <span
-              key={bank}
+              key={brand}
               className="text-[1.05rem] font-semibold tracking-tight transition-opacity hover:opacity-80"
               style={{ color: "var(--text-tertiary)", opacity: 0.5 }}
             >
-              {bank}
+              {brand}
             </span>
           ))}
         </div>
@@ -517,7 +499,7 @@ function TrustBar() {
   );
 }
 
-// ─── Stats Section (NEW) ─────────────────────────────────────────────────────
+// ─── Stats Section ───────────────────────────────────────────────────────────
 
 function Stats() {
   const ref = useReveal(0.15);
@@ -534,10 +516,7 @@ function Stats() {
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
           {stats.map((stat, i) => (
-            <div
-              key={stat.label}
-              className={`reveal-delay-${i + 1} text-center`}
-            >
+            <div key={stat.label} className={`reveal-delay-${i + 1} text-center`}>
               <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] text-blue/80 mb-4">
                 {stat.icon}
               </div>
@@ -559,40 +538,60 @@ function Stats() {
 
 function Features() {
   const headerRef = useReveal();
-  const cardsRef = useReveal(0.1);
+  const cardsRef = useReveal(0.05);
 
   const features = [
     {
-      icon: <Upload size={24} />,
-      title: "Convert",
+      icon: <FileText size={24} />,
+      title: "Convert Any Financial Document",
       description:
-        "Upload bank statements, invoices, receipts, tax forms. AI extracts everything into clean Excel in seconds.",
+        "Bank statements, credit card statements, invoices, receipts, tax forms, brokerage reports — upload any financial PDF and get clean, structured data in Excel, CSV, or JSON. Works with any bank, any country, any format.",
       gradient: "from-blue to-cyan-400",
     },
     {
       icon: <BarChart3 size={24} />,
-      title: "Analyze",
+      title: "Instant AI-Powered Analysis",
       description:
-        "Auto-categorize spending. Spot anomalies. Track cash flow. Zero setup needed.",
+        "The moment your document is processed, AI categorizes every transaction automatically — groceries, restaurants, utilities, subscriptions, transfers. See spending trends, spot anomalies, and understand your cash flow without configuring a single rule.",
       gradient: "from-purple-500 to-pink-400",
     },
     {
       icon: <MessageSquare size={24} />,
-      title: "Chat",
+      title: "Chat With Your Financial Data",
       description:
-        "Ask questions in plain English. What did I spend on food? Are there duplicate charges? Export any answer.",
+        'Ask questions in plain English. "What did I spend on restaurants this month?" "Show me all transactions over $500." "Are there any duplicate charges?" Get instant answers and export any result as a spreadsheet or report.',
       gradient: "from-amber-400 to-orange-500",
+    },
+    {
+      icon: <Shield size={24} />,
+      title: "Bank-Grade Security",
+      description:
+        "Your documents are encrypted with AES-256, automatically deleted within 24 hours, and processed with zero data retention AI. We never store or train on your financial data. Your privacy is not negotiable.",
+      gradient: "from-emerald-400 to-teal-500",
+    },
+    {
+      icon: <Download size={24} />,
+      title: "Export Anywhere",
+      description:
+        "Download as Excel, CSV, or JSON. Push directly to QuickBooks or Xero with one click. Connect via API or Zapier to automate your entire workflow. Your data, wherever you need it.",
+      gradient: "from-rose-400 to-red-500",
+    },
+    {
+      icon: <Users size={24} />,
+      title: "Built for Accountants & Bookkeepers",
+      description:
+        "Organize documents by client. Process hundreds of statements in batch. Verify accuracy with automatic balance reconciliation. Built for professionals who handle financial data every day, not just once a year.",
+      gradient: "from-indigo-400 to-blue-500",
     },
   ];
 
   return (
     <section id="features" className="relative py-28 lg:py-36 overflow-hidden">
-      {/* Background orbs */}
       <div className="orb orb-purple top-[10%] -left-[100px] w-[400px] h-[400px]" />
       <div className="orb orb-blue bottom-[10%] -right-[100px] w-[350px] h-[350px]" />
 
       <div className="relative mx-auto max-w-6xl px-6">
-        <div ref={headerRef} className="reveal text-center max-w-xl mx-auto">
+        <div ref={headerRef} className="reveal text-center max-w-2xl mx-auto">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">
             Features
           </p>
@@ -602,13 +601,16 @@ function Features() {
           >
             Everything you need to make sense of your finances
           </h2>
+          <p className="mt-4 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            No more manual data entry. No more spreadsheet headaches. Just upload and let AI do the work.
+          </p>
         </div>
 
-        <div ref={cardsRef} className="reveal mt-16 lg:mt-20 grid gap-6 md:grid-cols-3">
+        <div ref={cardsRef} className="reveal mt-16 lg:mt-20 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, i) => (
             <div
               key={feature.title}
-              className={`reveal-delay-${i + 1} feature-card rounded-2xl border p-8 lg:p-10`}
+              className={`reveal-delay-${Math.min(i + 1, 4)} feature-card rounded-2xl border p-8`}
               style={{
                 borderColor: "var(--border)",
                 boxShadow: "var(--card-shadow)",
@@ -618,13 +620,13 @@ function Features() {
                 {feature.icon}
               </div>
               <h3
-                className="mt-7 text-xl font-semibold"
+                className="mt-6 text-lg font-semibold leading-snug"
                 style={{ color: "var(--text-primary)" }}
               >
                 {feature.title}
               </h3>
               <p
-                className="mt-3 text-[0.9375rem] leading-relaxed"
+                className="mt-3 text-[0.875rem] leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
               >
                 {feature.description}
@@ -646,20 +648,20 @@ function HowItWorks() {
     {
       icon: <Upload size={24} />,
       number: "01",
-      title: "Upload your PDF",
-      desc: "Drag & drop any financial document — statements, invoices, receipts",
+      title: "Upload Your Document",
+      desc: "Drag and drop any financial PDF — bank statement, invoice, receipt, tax form. Numifi automatically detects the document type and extracts data using AI. No templates, no configuration.",
     },
     {
       icon: <Sparkles size={24} />,
       number: "02",
-      title: "AI extracts & analyzes",
-      desc: "Data is parsed, categorized, and insights generated in seconds",
+      title: "Review AI-Powered Results",
+      desc: "See every transaction extracted into a clean table with automatic categorization. AI flags unusual transactions, identifies recurring charges, and shows a spending breakdown. Confidence scores tell you exactly how sure the AI is about each extraction.",
     },
     {
       icon: <Download size={24} />,
       number: "03",
-      title: "Chat or download Excel",
-      desc: "Ask questions about your data or export clean spreadsheets",
+      title: "Chat, Export, and Move On",
+      desc: "Ask the AI chatbot any question about your data. Export to Excel, CSV, or push directly to your accounting software. What used to take an hour now takes 30 seconds.",
     },
   ];
 
@@ -673,7 +675,7 @@ function HowItWorks() {
       }}
     >
       <div className="mx-auto max-w-6xl px-6">
-        <div className="text-center max-w-xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">
             How It Works
           </p>
@@ -681,7 +683,7 @@ function HowItWorks() {
             className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
-            Three simple steps
+            From PDF chaos to financial clarity in 3 steps
           </h2>
         </div>
 
@@ -705,9 +707,7 @@ function HowItWorks() {
                     boxShadow: "var(--card-shadow)",
                   }}
                 >
-                  <div className="text-blue">
-                    {step.icon}
-                  </div>
+                  <div className="text-blue">{step.icon}</div>
                   <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-blue text-[10px] font-bold text-white shadow-lg shadow-blue/25">
                     {step.number.replace("0", "")}
                   </div>
@@ -719,7 +719,7 @@ function HowItWorks() {
                   {step.title}
                 </h3>
                 <p
-                  className="mt-2 text-sm leading-relaxed max-w-[240px] mx-auto"
+                  className="mt-3 text-sm leading-relaxed max-w-xs mx-auto"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   {step.desc}
@@ -748,8 +748,9 @@ function Pricing() {
       description: "For individuals getting started",
       features: [
         "200 pages per month",
-        "AI-powered insights",
-        "10 chatbot questions per doc",
+        "AI categorization",
+        "Spending insights",
+        "10 chatbot questions per month",
         "Excel & CSV export",
       ],
     },
@@ -761,8 +762,9 @@ function Pricing() {
       popular: true,
       features: [
         "1,000 pages per month",
-        "Unlimited chatbot questions",
+        "Unlimited AI chatbot",
         "Anomaly detection",
+        "Cash flow analysis",
         "QuickBooks & Xero integration",
       ],
     },
@@ -775,14 +777,15 @@ function Pricing() {
         "5,000 pages per month",
         "Full API access",
         "5 team seats",
+        "Client organization",
         "Priority support",
+        "Custom export templates",
       ],
     },
   ];
 
   return (
     <section id="pricing" className="relative py-28 lg:py-36 overflow-hidden">
-      {/* Background orbs */}
       <div className="orb orb-blue top-[20%] -right-[200px]" />
       <div className="orb orb-cyan bottom-[10%] -left-[150px] w-[350px] h-[350px]" />
 
@@ -795,19 +798,19 @@ function Pricing() {
             className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
-            Simple, transparent pricing
+            Simple pricing. No surprises.
           </h2>
+          <p className="mt-4 text-base" style={{ color: "var(--text-secondary)" }}>
+            Start free. Upgrade when you need more.
+          </p>
 
-          {/* Annual toggle */}
           <div
             className="mt-8 inline-flex items-center gap-4 rounded-full border px-5 py-2.5"
             style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-card)" }}
           >
             <span
               className="text-sm font-medium transition-colors"
-              style={{
-                color: annual ? "var(--text-tertiary)" : "var(--text-primary)",
-              }}
+              style={{ color: annual ? "var(--text-tertiary)" : "var(--text-primary)" }}
             >
               Monthly
             </span>
@@ -827,22 +830,15 @@ function Pricing() {
             </button>
             <span
               className="text-sm font-medium transition-colors"
-              style={{
-                color: annual ? "var(--text-primary)" : "var(--text-tertiary)",
-              }}
+              style={{ color: annual ? "var(--text-primary)" : "var(--text-tertiary)" }}
             >
               Yearly
-              <span className="ml-1.5 text-xs text-emerald-500 font-semibold">
-                Save 20%
-              </span>
+              <span className="ml-1.5 text-xs text-emerald-500 font-semibold">Save 20%</span>
             </span>
           </div>
         </div>
 
-        <div
-          ref={cardsRef}
-          className="reveal mt-14 grid gap-6 lg:grid-cols-3 max-w-5xl mx-auto"
-        >
+        <div ref={cardsRef} className="reveal mt-14 grid gap-6 lg:grid-cols-3 max-w-5xl mx-auto">
           {plans.map((plan, i) => (
             <div
               key={plan.name}
@@ -865,56 +861,42 @@ function Pricing() {
                 </div>
               )}
 
-              <h3
-                className="text-lg font-semibold"
-                style={{ color: "var(--text-primary)" }}
-              >
+              <h3 className="text-lg font-semibold" style={{ color: "var(--text-primary)" }}>
                 {plan.name}
               </h3>
-              <p
-                className="mt-1.5 text-sm"
-                style={{ color: "var(--text-tertiary)" }}
-              >
+              <p className="mt-1.5 text-sm" style={{ color: "var(--text-tertiary)" }}>
                 {plan.description}
               </p>
 
               <div className="mt-6 flex items-baseline gap-1">
-                <span
-                  className="text-5xl font-bold tracking-tight"
-                  style={{ color: "var(--text-primary)" }}
-                >
+                <span className="text-5xl font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>
                   ${annual ? plan.yearly : plan.monthly}
                 </span>
-                <span
-                  style={{ color: "var(--text-tertiary)" }}
-                  className="text-sm"
-                >
+                <span style={{ color: "var(--text-tertiary)" }} className="text-sm">
                   /mo
-                  {annual ? (
-                    <span className="text-xs"> billed yearly</span>
-                  ) : null}
+                  {annual ? <span className="text-xs"> billed yearly</span> : null}
                 </span>
               </div>
 
-              <button
-                disabled
-                className={`mt-8 w-full rounded-xl py-3.5 text-sm font-semibold cursor-not-allowed transition-all ${
+              <a
+                href="#signup"
+                className={`mt-8 w-full rounded-xl py-3.5 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
                   plan.popular
-                    ? "bg-blue/10 text-blue border border-blue/20"
-                    : "border"
+                    ? "bg-blue text-white hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/20"
+                    : "border hover:border-blue/30 hover:bg-blue/[0.03]"
                 }`}
                 style={
                   plan.popular
                     ? {}
                     : {
                         borderColor: "var(--border)",
-                        color: "var(--text-tertiary)",
-                        opacity: 0.6,
+                        color: "var(--text-secondary)",
                       }
                 }
               >
-                Coming Soon
-              </button>
+                Coming Soon — Join Waitlist
+                <ArrowRight size={14} />
+              </a>
 
               <ul className="mt-8 space-y-3.5">
                 {plan.features.map((feature) => (
@@ -923,7 +905,7 @@ function Pricing() {
                     className="flex items-center gap-3 text-sm"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue/10">
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue/10 shrink-0">
                       <Check size={12} className="text-blue" />
                     </div>
                     {feature}
@@ -938,14 +920,119 @@ function Pricing() {
   );
 }
 
+// ─── Comparison Section ──────────────────────────────────────────────────────
+
+function Comparison() {
+  const ref = useReveal(0.1);
+
+  const rows = [
+    {
+      category: "Processing Time",
+      icon: <Timer size={16} />,
+      old: "45 min per statement",
+      numifi: "30 seconds",
+    },
+    {
+      category: "Accuracy",
+      icon: <Target size={16} />,
+      old: "Human errors inevitable",
+      numifi: "99%+ with balance verification",
+    },
+    {
+      category: "Analysis",
+      icon: <BarChart3 size={16} />,
+      old: "Open Excel, build formulas",
+      numifi: "Automatic AI insights",
+    },
+    {
+      category: "Questions",
+      icon: <Search size={16} />,
+      old: "Scroll through rows",
+      numifi: "Ask in plain English",
+    },
+    {
+      category: "Cost",
+      icon: <DollarSign size={16} />,
+      old: "$50+/hour accountant time",
+      numifi: "From $24/month",
+    },
+  ];
+
+  return (
+    <section
+      className="py-28 lg:py-36 border-y"
+      style={{ backgroundColor: "var(--bg-alt)", borderColor: "var(--border)" }}
+    >
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="text-center max-w-xl mx-auto mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">
+            Compare
+          </p>
+          <h2
+            className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
+            style={{ color: "var(--text-primary)" }}
+          >
+            Why accountants switch to Numifi
+          </h2>
+        </div>
+
+        <div ref={ref} className="reveal">
+          {/* Table header */}
+          <div
+            className="grid grid-cols-[1fr_1fr_1fr] gap-4 px-6 py-4 rounded-t-2xl text-xs font-semibold uppercase tracking-wider"
+            style={{ backgroundColor: "var(--bg-card)", borderBottom: "1px solid var(--border)" }}
+          >
+            <span style={{ color: "var(--text-tertiary)" }}></span>
+            <span style={{ color: "var(--text-tertiary)" }} className="text-center">Manual / Traditional</span>
+            <span className="text-blue text-center">Numifi</span>
+          </div>
+
+          {/* Table rows */}
+          <div
+            className="rounded-b-2xl border overflow-hidden"
+            style={{ borderColor: "var(--border)" }}
+          >
+            {rows.map((row, i) => (
+              <div
+                key={row.category}
+                className={`reveal-delay-${Math.min(i + 1, 4)} grid grid-cols-[1fr_1fr_1fr] gap-4 items-center px-6 py-5 transition-colors`}
+                style={{
+                  backgroundColor: i % 2 === 0 ? "var(--bg-card)" : "var(--bg-alt)",
+                  borderBottom: i < rows.length - 1 ? "1px solid var(--border)" : "none",
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className="flex h-8 w-8 items-center justify-center rounded-lg shrink-0"
+                    style={{ backgroundColor: "var(--bg-alt)" }}
+                  >
+                    <span style={{ color: "var(--text-tertiary)" }}>{row.icon}</span>
+                  </div>
+                  <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                    {row.category}
+                  </span>
+                </div>
+                <div className="text-sm text-center" style={{ color: "var(--text-tertiary)" }}>
+                  {row.old}
+                </div>
+                <div className="text-sm font-semibold text-center text-blue">
+                  {row.numifi}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Email Signup ────────────────────────────────────────────────────────────
 
 function EmailSignup() {
   const ref = useReveal();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
   const handleSubmit = useCallback(
@@ -981,93 +1068,68 @@ function EmailSignup() {
   return (
     <section
       id="signup"
-      className="relative py-28 lg:py-36 border-t overflow-hidden"
-      style={{
-        backgroundColor: "var(--bg-alt)",
-        borderColor: "var(--border)",
-      }}
+      className="relative py-28 lg:py-36 overflow-hidden stats-section"
     >
       <div className="cta-glow" />
 
       <div ref={ref} className="reveal relative mx-auto max-w-6xl px-6">
-        <div
-          className="relative mx-auto max-w-2xl rounded-3xl border p-10 sm:p-14 text-center overflow-hidden"
-          style={{
-            borderColor: "var(--border)",
-            backgroundColor: "var(--bg-card)",
-            boxShadow: "0 25px 60px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02)",
-          }}
-        >
-          {/* Decorative gradient corners */}
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-blue/5 to-transparent rounded-tl-3xl pointer-events-none" />
-          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-purple-500/5 to-transparent rounded-br-3xl pointer-events-none" />
-
-          <div className="relative">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue to-purple-500 mb-6 shadow-lg shadow-blue/20">
-              <Mail size={22} className="text-white" />
-            </div>
-
-            <h2
-              className="text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Be the first to try Numifi
-            </h2>
-            <p
-              className="mt-4 text-lg"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              First 100 users get{" "}
-              <span className="font-semibold text-blue">
-                Pro free for 3 months
-              </span>
-            </p>
-
-            <form onSubmit={handleSubmit} className="mt-8">
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  className="flex-1 rounded-xl border px-5 py-3.5 text-sm transition-all duration-200"
-                  style={{
-                    borderColor: "var(--border)",
-                    backgroundColor: "var(--input-bg)",
-                    color: "var(--text-primary)",
-                  }}
-                />
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25 disabled:opacity-50 whitespace-nowrap"
-                >
-                  {status === "loading" ? (
-                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  ) : (
-                    <>
-                      Get Early Access
-                      <ArrowRight size={15} />
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
-
-            {message && (
-              <div
-                className={`mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium ${
-                  status === "success"
-                    ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                    : "bg-red-500/10 text-red-600 dark:text-red-400"
-                }`}
-              >
-                {status === "success" && <Check size={14} />}
-                {message}
-              </div>
-            )}
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue to-purple-500 mb-8 shadow-lg shadow-blue/20">
+            <Mail size={22} className="text-white" />
           </div>
+
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: "var(--stats-text)" }}>
+            Ready to stop wasting hours on data entry?
+          </h2>
+          <p className="mt-4 text-lg" style={{ color: "var(--stats-muted)" }}>
+            Join the waitlist. First 100 users get{" "}
+            <span className="font-semibold text-blue">Pro free for 3 months</span>.
+          </p>
+
+          <form onSubmit={handleSubmit} className="mt-10">
+            <div className="flex flex-col gap-3 sm:flex-row max-w-lg mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="flex-1 rounded-xl border px-5 py-3.5 text-sm transition-all duration-200 bg-white/[0.06] border-white/[0.1] text-white placeholder:text-white/40"
+                style={{}}
+              />
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25 disabled:opacity-50 whitespace-nowrap"
+              >
+                {status === "loading" ? (
+                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                ) : (
+                  <>
+                    Get Early Access
+                    <ArrowRight size={15} />
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+
+          <p className="mt-5 text-sm" style={{ color: "var(--stats-muted)" }}>
+            No spam. No credit card. Cancel anytime.
+          </p>
+
+          {message && (
+            <div
+              className={`mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium ${
+                status === "success"
+                  ? "bg-emerald-500/15 text-emerald-400"
+                  : "bg-red-500/15 text-red-400"
+              }`}
+            >
+              {status === "success" && <Check size={14} />}
+              {message}
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -1082,14 +1144,11 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-14 lg:py-16">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div>
-            <span
-              className="text-xl font-bold tracking-tight"
-              style={{ color: "var(--text-primary)" }}
-            >
+            <span className="text-xl font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>
               Numifi
             </span>
-            <p className="mt-2 text-sm max-w-[240px]" style={{ color: "var(--text-tertiary)" }}>
-              AI-powered financial document conversion and analysis.
+            <p className="mt-2 text-sm max-w-[280px]" style={{ color: "var(--text-tertiary)" }}>
+              Built with security and privacy at the core.
             </p>
           </div>
 
@@ -1102,14 +1161,19 @@ function Footer() {
                 Product
               </h4>
               <div className="mt-4 flex flex-col gap-3">
-                {["Features", "Pricing", "Blog"].map((link) => (
+                {[
+                  { label: "Features", href: "#features" },
+                  { label: "How It Works", href: "#how-it-works" },
+                  { label: "Pricing", href: "#pricing" },
+                  { label: "Blog", href: "#" },
+                ].map((link) => (
                   <a
-                    key={link}
-                    href={link === "Blog" ? "#" : `#${link.toLowerCase()}`}
+                    key={link.label}
+                    href={link.href}
                     className="text-sm transition-colors hover:underline"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    {link}
+                    {link.label}
                   </a>
                 ))}
               </div>
@@ -1182,6 +1246,7 @@ export default function Home() {
       <Features />
       <HowItWorks />
       <Pricing />
+      <Comparison />
       <EmailSignup />
       <Footer />
     </div>
