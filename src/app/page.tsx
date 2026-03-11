@@ -199,13 +199,13 @@ function HeroMockup() {
     <div className="relative mx-auto mt-16 lg:mt-20 max-w-4xl">
       <div className="hero-glow" />
 
-      {/* Floating badges */}
+      {/* Floating badges — positioned outside overflow-hidden with z-10 */}
       <div
-        className="absolute -left-4 top-12 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-sm animate-[float-1_6s_ease-in-out_infinite]"
+        className="absolute -left-16 top-12 z-10 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-md animate-[float-1_6s_ease-in-out_infinite]"
         style={{
           backgroundColor: "var(--bg-card)",
           borderColor: "var(--border)",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.06)",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02)",
         }}
       >
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10">
@@ -218,11 +218,11 @@ function HeroMockup() {
       </div>
 
       <div
-        className="absolute -right-4 top-24 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-sm animate-[float-2_7s_ease-in-out_infinite]"
+        className="absolute -right-16 top-24 z-10 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-md animate-[float-2_7s_ease-in-out_infinite]"
         style={{
           backgroundColor: "var(--bg-card)",
           borderColor: "var(--border)",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.06)",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02)",
         }}
       >
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue/10">
@@ -426,7 +426,7 @@ function Hero() {
             href="#signup"
             className="group inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-hover hover:shadow-xl hover:shadow-blue/25 hover:scale-[1.02]"
           >
-            Get Early Access
+            Join Waitlist
             <ArrowRight
               size={15}
               className="transition-transform duration-200 group-hover:translate-x-0.5"
