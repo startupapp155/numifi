@@ -16,6 +16,12 @@ import {
   ChevronDown,
   Mail,
   FileSpreadsheet,
+  Shield,
+  Zap,
+  TrendingUp,
+  FileText,
+  Users,
+  Clock,
 } from "lucide-react";
 
 // ─── Hooks ───────────────────────────────────────────────────────────────────
@@ -97,11 +103,11 @@ function Navbar() {
         borderColor: scrolled ? "var(--nav-border)" : "transparent",
       }}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-6">
         {/* Logo */}
         <a
           href="#"
-          className="text-[1.125rem] font-bold tracking-tight"
+          className="text-xl font-bold tracking-tight"
           style={{ color: "var(--text-primary)" }}
         >
           Numifi
@@ -122,10 +128,10 @@ function Navbar() {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <button
             onClick={toggle}
-            className="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+            className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
             style={{ color: "var(--text-secondary)" }}
             aria-label="Toggle dark mode"
           >
@@ -134,7 +140,7 @@ function Navbar() {
 
           <a
             href="#signup"
-            className="hidden rounded-full bg-blue px-5 py-2 text-[0.8125rem] font-medium text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/20 sm:inline-flex"
+            className="hidden rounded-full bg-blue px-5 py-2.5 text-[0.8125rem] font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25 sm:inline-flex items-center gap-2"
           >
             Get Early Access
           </a>
@@ -190,15 +196,51 @@ function Navbar() {
 
 function HeroMockup() {
   return (
-    <div className="relative mx-auto mt-20 max-w-4xl">
+    <div className="relative mx-auto mt-16 lg:mt-20 max-w-4xl">
       <div className="hero-glow" />
+
+      {/* Floating badges */}
+      <div
+        className="absolute -left-4 top-12 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-sm animate-[float-1_6s_ease-in-out_infinite]"
+        style={{
+          backgroundColor: "var(--bg-card)",
+          borderColor: "var(--border)",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.06)",
+        }}
+      >
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10">
+          <TrendingUp size={14} className="text-emerald-500" />
+        </div>
+        <div>
+          <div className="text-[10px] font-medium" style={{ color: "var(--text-tertiary)" }}>Cash Flow</div>
+          <div className="text-xs font-bold text-emerald-500">+$3,200</div>
+        </div>
+      </div>
+
+      <div
+        className="absolute -right-4 top-24 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-sm animate-[float-2_7s_ease-in-out_infinite]"
+        style={{
+          backgroundColor: "var(--bg-card)",
+          borderColor: "var(--border)",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.06)",
+        }}
+      >
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue/10">
+          <Shield size={14} className="text-blue" />
+        </div>
+        <div>
+          <div className="text-[10px] font-medium" style={{ color: "var(--text-tertiary)" }}>Accuracy</div>
+          <div className="text-xs font-bold" style={{ color: "var(--text-primary)" }}>99.7%</div>
+        </div>
+      </div>
+
       <div
         className="relative rounded-2xl border overflow-hidden"
         style={{
           backgroundColor: "var(--bg-card)",
           borderColor: "var(--border)",
           boxShadow:
-            "0 25px 50px -12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02)",
+            "0 25px 80px -12px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.02)",
         }}
       >
         {/* Window chrome */}
@@ -228,10 +270,9 @@ function HeroMockup() {
           <div className="p-6 md:p-8 md:border-r" style={{ borderColor: "var(--border)" }}>
             <div className="flex items-center gap-2.5 mb-6">
               <div
-                className="flex h-8 w-8 items-center justify-center rounded-lg"
-                style={{ backgroundColor: "var(--bg-alt)" }}
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-500/10"
               >
-                <Upload size={14} style={{ color: "var(--text-tertiary)" }} />
+                <FileText size={15} className="text-red-500" />
               </div>
               <div>
                 <div
@@ -244,10 +285,19 @@ function HeroMockup() {
                   className="text-[10px]"
                   style={{ color: "var(--text-tertiary)" }}
                 >
-                  2 pages · 145 KB
+                  2 pages &middot; 145 KB
                 </div>
               </div>
             </div>
+
+            {/* Animated progress indicator */}
+            <div className="mb-5 flex items-center gap-2">
+              <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "var(--border)" }}>
+                <div className="h-full w-full bg-gradient-to-r from-blue to-purple-500 rounded-full shimmer-line" />
+              </div>
+              <span className="text-[10px] font-semibold text-blue">Processed</span>
+            </div>
+
             <div className="space-y-2.5">
               {[0.85, 1, 0.7, 0.9, 0.6, 0.8, 1, 0.75].map((w, i) => (
                 <div
@@ -256,7 +306,7 @@ function HeroMockup() {
                   style={{
                     width: `${w * 100}%`,
                     backgroundColor: "var(--border)",
-                    opacity: 0.7 - i * 0.05,
+                    opacity: 0.6 - i * 0.04,
                   }}
                 />
               ))}
@@ -275,7 +325,7 @@ function HeroMockup() {
                   Extracted Data
                 </span>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium">
+              <span className="text-[10px] px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold">
                 32 rows
               </span>
             </div>
@@ -292,15 +342,15 @@ function HeroMockup() {
 
             <div className="space-y-1">
               {[
-                { date: "03/01", desc: "Starbucks Coffee", amt: "-$5.40" },
-                { date: "03/02", desc: "Amazon Prime", amt: "-$14.99" },
-                { date: "03/03", desc: "Direct Deposit — Payroll", amt: "+$3,200.00" },
-                { date: "03/04", desc: "Netflix", amt: "-$15.99" },
-                { date: "03/05", desc: "Whole Foods Market", amt: "-$67.32" },
+                { date: "03/01", desc: "Starbucks Coffee", amt: "-$5.40", cat: "Food" },
+                { date: "03/02", desc: "Amazon Prime", amt: "-$14.99", cat: "Subscription" },
+                { date: "03/03", desc: "Direct Deposit — Payroll", amt: "+$3,200.00", cat: "Income" },
+                { date: "03/04", desc: "Netflix", amt: "-$15.99", cat: "Subscription" },
+                { date: "03/05", desc: "Whole Foods Market", amt: "-$67.32", cat: "Groceries" },
               ].map((row) => (
                 <div
                   key={row.desc}
-                  className="grid grid-cols-[60px_1fr_80px] gap-3 items-center rounded-lg px-3 py-2.5 text-xs"
+                  className="grid grid-cols-[60px_1fr_80px] gap-3 items-center rounded-lg px-3 py-2.5 text-xs transition-colors"
                   style={{ backgroundColor: "var(--bg-alt)" }}
                 >
                   <span
@@ -316,7 +366,7 @@ function HeroMockup() {
                     {row.desc}
                   </span>
                   <span
-                    className={`text-right font-mono text-[11px] font-medium ${
+                    className={`text-right font-mono text-[11px] font-semibold ${
                       row.amt.startsWith("+")
                         ? "text-emerald-600 dark:text-emerald-400"
                         : ""
@@ -335,8 +385,8 @@ function HeroMockup() {
 
             {/* Chat bubble */}
             <div className="mt-5 flex items-start gap-2.5">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue/10">
-                <Sparkles size={13} className="text-blue" />
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue to-purple-500">
+                <Sparkles size={12} className="text-white" />
               </div>
               <div
                 className="rounded-2xl rounded-tl-sm px-4 py-2.5 text-xs leading-relaxed"
@@ -361,17 +411,27 @@ function HeroMockup() {
 
 function Hero() {
   return (
-    <section className="relative pt-36 pb-20 lg:pt-44 lg:pb-28 overflow-hidden">
+    <section className="relative pt-32 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
+      {/* Decorative orbs */}
+      <div className="orb orb-blue -top-[200px] -left-[200px]" />
+      <div className="orb orb-purple top-[100px] -right-[150px]" />
+      <div className="orb orb-cyan -bottom-[100px] left-[30%]" />
       <div className="hero-grid" />
-      <div className="mx-auto max-w-6xl px-6 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium mb-8"
-          style={{ borderColor: "var(--border)", color: "var(--text-secondary)" }}>
-          <Sparkles size={12} className="text-blue" />
+
+      <div className="relative mx-auto max-w-6xl px-6 text-center">
+        <div
+          className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium mb-8 backdrop-blur-sm"
+          style={{ borderColor: "var(--border)", color: "var(--text-secondary)", backgroundColor: "var(--bg-card)" }}
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-blue" />
+          </span>
           Now in early access
         </div>
 
         <h1
-          className="mx-auto max-w-3xl text-[2.75rem] font-bold leading-[1.1] tracking-tight sm:text-[3.5rem] lg:text-[4rem]"
+          className="mx-auto max-w-3xl text-[2.75rem] font-bold leading-[1.08] tracking-tight sm:text-[3.5rem] lg:text-[4.25rem]"
           style={{ color: "var(--text-primary)" }}
         >
           Your finances, finally{" "}
@@ -389,7 +449,7 @@ function Hero() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             href="#signup"
-            className="group inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-xl hover:shadow-blue/20"
+            className="group inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-hover hover:shadow-xl hover:shadow-blue/25 hover:scale-[1.02]"
           >
             Get Early Access
             <ArrowRight
@@ -399,7 +459,7 @@ function Hero() {
           </a>
           <a
             href="#how-it-works"
-            className="group inline-flex items-center gap-2 rounded-full border px-8 py-3.5 text-sm font-semibold transition-all duration-200 hover:shadow-sm"
+            className="group inline-flex items-center gap-2 rounded-full border px-8 py-3.5 text-sm font-semibold transition-all duration-300 hover:shadow-sm hover:scale-[1.02]"
             style={{
               borderColor: "var(--border)",
               color: "var(--text-secondary)",
@@ -428,7 +488,7 @@ function TrustBar() {
   return (
     <section
       ref={ref}
-      className="reveal py-16 lg:py-20 border-y"
+      className="reveal py-14 lg:py-16 border-y"
       style={{
         backgroundColor: "var(--bg-alt)",
         borderColor: "var(--border)",
@@ -436,20 +496,58 @@ function TrustBar() {
     >
       <div className="mx-auto max-w-6xl px-6 text-center">
         <p
-          className="text-xs font-medium uppercase tracking-[0.15em]"
+          className="text-xs font-medium uppercase tracking-[0.2em]"
           style={{ color: "var(--text-tertiary)" }}
         >
           Works with statements from
         </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-14 gap-y-4">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-16 gap-y-4">
           {banks.map((bank) => (
             <span
               key={bank}
-              className="text-base font-semibold tracking-tight"
-              style={{ color: "var(--text-tertiary)", opacity: 0.6 }}
+              className="text-[1.05rem] font-semibold tracking-tight transition-opacity hover:opacity-80"
+              style={{ color: "var(--text-tertiary)", opacity: 0.5 }}
             >
               {bank}
             </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Stats Section (NEW) ─────────────────────────────────────────────────────
+
+function Stats() {
+  const ref = useReveal(0.15);
+
+  const stats = [
+    { value: "10,000+", label: "Documents Processed", icon: <FileText size={18} /> },
+    { value: "99.7%", label: "Extraction Accuracy", icon: <Zap size={18} /> },
+    { value: "< 5 sec", label: "Average Processing Time", icon: <Clock size={18} /> },
+    { value: "2,400+", label: "Early Access Users", icon: <Users size={18} /> },
+  ];
+
+  return (
+    <section ref={ref} className="reveal stats-section py-20 lg:py-24">
+      <div className="relative mx-auto max-w-6xl px-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+          {stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              className={`reveal-delay-${i + 1} text-center`}
+            >
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] text-blue/80 mb-4">
+                {stat.icon}
+              </div>
+              <div className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--stats-text)" }}>
+                {stat.value}
+              </div>
+              <div className="mt-1.5 text-sm font-medium" style={{ color: "var(--stats-muted)" }}>
+                {stat.label}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -465,62 +563,62 @@ function Features() {
 
   const features = [
     {
-      icon: <Upload size={22} />,
+      icon: <Upload size={24} />,
       title: "Convert",
       description:
         "Upload bank statements, invoices, receipts, tax forms. AI extracts everything into clean Excel in seconds.",
+      gradient: "from-blue to-cyan-400",
     },
     {
-      icon: <BarChart3 size={22} />,
+      icon: <BarChart3 size={24} />,
       title: "Analyze",
       description:
         "Auto-categorize spending. Spot anomalies. Track cash flow. Zero setup needed.",
+      gradient: "from-purple-500 to-pink-400",
     },
     {
-      icon: <MessageSquare size={22} />,
+      icon: <MessageSquare size={24} />,
       title: "Chat",
       description:
         "Ask questions in plain English. What did I spend on food? Are there duplicate charges? Export any answer.",
+      gradient: "from-amber-400 to-orange-500",
     },
   ];
 
   return (
-    <section id="features" className="py-28 lg:py-36">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="features" className="relative py-28 lg:py-36 overflow-hidden">
+      {/* Background orbs */}
+      <div className="orb orb-purple top-[10%] -left-[100px] w-[400px] h-[400px]" />
+      <div className="orb orb-blue bottom-[10%] -right-[100px] w-[350px] h-[350px]" />
+
+      <div className="relative mx-auto max-w-6xl px-6">
         <div ref={headerRef} className="reveal text-center max-w-xl mx-auto">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-blue">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">
             Features
           </p>
           <h2
-            className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl"
+            className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Everything you need to make sense of your finances
           </h2>
         </div>
 
-        <div ref={cardsRef} className="reveal mt-16 grid gap-5 md:grid-cols-3">
+        <div ref={cardsRef} className="reveal mt-16 lg:mt-20 grid gap-6 md:grid-cols-3">
           {features.map((feature, i) => (
             <div
               key={feature.title}
-              className={`reveal-delay-${i + 1} group rounded-2xl border p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1`}
+              className={`reveal-delay-${i + 1} feature-card rounded-2xl border p-8 lg:p-10`}
               style={{
                 borderColor: "var(--border)",
-                backgroundColor: "var(--bg-card)",
                 boxShadow: "var(--card-shadow)",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = "var(--card-shadow-hover)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = "var(--card-shadow)";
-              }}
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue/[0.08] text-blue">
+              <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.gradient} text-white shadow-lg`}>
                 {feature.icon}
               </div>
               <h3
-                className="mt-6 text-lg font-semibold"
+                className="mt-7 text-xl font-semibold"
                 style={{ color: "var(--text-primary)" }}
               >
                 {feature.title}
@@ -546,29 +644,29 @@ function HowItWorks() {
 
   const steps = [
     {
-      icon: <Upload size={22} />,
+      icon: <Upload size={24} />,
       number: "01",
       title: "Upload your PDF",
-      desc: "Drag & drop any financial document",
+      desc: "Drag & drop any financial document — statements, invoices, receipts",
     },
     {
-      icon: <Sparkles size={22} />,
+      icon: <Sparkles size={24} />,
       number: "02",
       title: "AI extracts & analyzes",
-      desc: "Data is parsed and categorized instantly",
+      desc: "Data is parsed, categorized, and insights generated in seconds",
     },
     {
-      icon: <Download size={22} />,
+      icon: <Download size={24} />,
       number: "03",
       title: "Chat or download Excel",
-      desc: "Ask questions or export clean spreadsheets",
+      desc: "Ask questions about your data or export clean spreadsheets",
     },
   ];
 
   return (
     <section
       id="how-it-works"
-      className="py-28 lg:py-36 border-y"
+      className="relative py-28 lg:py-36 border-y"
       style={{
         backgroundColor: "var(--bg-alt)",
         borderColor: "var(--border)",
@@ -576,11 +674,11 @@ function HowItWorks() {
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="text-center max-w-xl mx-auto">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-blue">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">
             How It Works
           </p>
           <h2
-            className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl"
+            className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Three simple steps
@@ -589,42 +687,39 @@ function HowItWorks() {
 
         <div ref={ref} className="reveal mt-20 relative">
           {/* Connector line */}
-          <div className="hidden md:block absolute top-[30px] left-[calc(16.67%+28px)] right-[calc(16.67%+28px)]">
-            <div
-              className="h-px w-full"
-              style={{ backgroundColor: "var(--border)" }}
-            />
+          <div className="hidden md:block absolute top-[38px] left-[calc(16.67%+30px)] right-[calc(16.67%+30px)]">
+            <div className="h-px w-full shimmer-line" style={{ backgroundColor: "var(--border)" }} />
           </div>
 
           <div className="grid gap-12 md:grid-cols-3">
             {steps.map((step, i) => (
               <div
                 key={step.number}
-                className={`reveal-delay-${i + 1} text-center`}
+                className={`reveal-delay-${i + 1} step-card text-center`}
               >
-                <div className="relative mx-auto flex h-[60px] w-[60px] items-center justify-center rounded-2xl border text-blue"
+                <div
+                  className="step-icon relative mx-auto flex h-[76px] w-[76px] items-center justify-center rounded-2xl border"
                   style={{
                     borderColor: "var(--border)",
                     backgroundColor: "var(--bg-card)",
                     boxShadow: "var(--card-shadow)",
                   }}
                 >
-                  {step.icon}
-                </div>
-                <div
-                  className="mt-5 text-xs font-bold font-mono tracking-wider"
-                  style={{ color: "var(--text-tertiary)" }}
-                >
-                  {step.number}
+                  <div className="text-blue">
+                    {step.icon}
+                  </div>
+                  <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-blue text-[10px] font-bold text-white shadow-lg shadow-blue/25">
+                    {step.number.replace("0", "")}
+                  </div>
                 </div>
                 <h3
-                  className="mt-2 text-lg font-semibold"
+                  className="mt-6 text-lg font-semibold"
                   style={{ color: "var(--text-primary)" }}
                 >
                   {step.title}
                 </h3>
                 <p
-                  className="mt-2 text-sm"
+                  className="mt-2 text-sm leading-relaxed max-w-[240px] mx-auto"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   {step.desc}
@@ -686,27 +781,32 @@ function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-28 lg:py-36">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="pricing" className="relative py-28 lg:py-36 overflow-hidden">
+      {/* Background orbs */}
+      <div className="orb orb-blue top-[20%] -right-[200px]" />
+      <div className="orb orb-cyan bottom-[10%] -left-[150px] w-[350px] h-[350px]" />
+
+      <div className="relative mx-auto max-w-6xl px-6">
         <div ref={headerRef} className="reveal text-center max-w-xl mx-auto">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-blue">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">
             Pricing
           </p>
           <h2
-            className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl"
+            className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Simple, transparent pricing
           </h2>
 
           {/* Annual toggle */}
-          <div className="mt-8 inline-flex items-center gap-3">
+          <div
+            className="mt-8 inline-flex items-center gap-4 rounded-full border px-5 py-2.5"
+            style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-card)" }}
+          >
             <span
               className="text-sm font-medium transition-colors"
               style={{
-                color: annual
-                  ? "var(--text-tertiary)"
-                  : "var(--text-primary)",
+                color: annual ? "var(--text-tertiary)" : "var(--text-primary)",
               }}
             >
               Monthly
@@ -728,9 +828,7 @@ function Pricing() {
             <span
               className="text-sm font-medium transition-colors"
               style={{
-                color: annual
-                  ? "var(--text-primary)"
-                  : "var(--text-tertiary)",
+                color: annual ? "var(--text-primary)" : "var(--text-tertiary)",
               }}
             >
               Yearly
@@ -743,34 +841,26 @@ function Pricing() {
 
         <div
           ref={cardsRef}
-          className="reveal mt-14 grid gap-5 lg:grid-cols-3 max-w-5xl mx-auto"
+          className="reveal mt-14 grid gap-6 lg:grid-cols-3 max-w-5xl mx-auto"
         >
           {plans.map((plan, i) => (
             <div
               key={plan.name}
-              className={`reveal-delay-${i + 1} relative rounded-2xl border p-8 lg:p-10 transition-all duration-300 ${
+              className={`reveal-delay-${i + 1} relative rounded-2xl border p-8 lg:p-10 transition-all duration-400 ${
                 plan.popular
                   ? "pricing-popular border-transparent lg:scale-[1.03]"
-                  : "hover:-translate-y-1"
+                  : "feature-card"
               }`}
               style={{
                 borderColor: plan.popular ? undefined : "var(--border)",
                 backgroundColor: "var(--bg-card)",
                 boxShadow: plan.popular
-                  ? "0 25px 50px -12px rgba(59,130,246,0.12), var(--card-shadow)"
+                  ? "0 25px 60px -12px rgba(59,130,246,0.15), var(--card-shadow)"
                   : "var(--card-shadow)",
-              }}
-              onMouseEnter={(e) => {
-                if (!plan.popular)
-                  e.currentTarget.style.boxShadow = "var(--card-shadow-hover)";
-              }}
-              onMouseLeave={(e) => {
-                if (!plan.popular)
-                  e.currentTarget.style.boxShadow = "var(--card-shadow)";
               }}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue px-4 py-1 text-[11px] font-semibold text-white shadow-lg shadow-blue/25">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-blue to-purple-500 px-5 py-1.5 text-[11px] font-semibold text-white shadow-lg shadow-blue/25">
                   Most Popular
                 </div>
               )}
@@ -790,7 +880,7 @@ function Pricing() {
 
               <div className="mt-6 flex items-baseline gap-1">
                 <span
-                  className="text-4xl font-bold tracking-tight"
+                  className="text-5xl font-bold tracking-tight"
                   style={{ color: "var(--text-primary)" }}
                 >
                   ${annual ? plan.yearly : plan.monthly}
@@ -808,12 +898,20 @@ function Pricing() {
 
               <button
                 disabled
-                className="mt-8 w-full rounded-xl border py-3 text-sm font-medium cursor-not-allowed transition-colors"
-                style={{
-                  borderColor: "var(--border)",
-                  color: "var(--text-tertiary)",
-                  opacity: 0.5,
-                }}
+                className={`mt-8 w-full rounded-xl py-3.5 text-sm font-semibold cursor-not-allowed transition-all ${
+                  plan.popular
+                    ? "bg-blue/10 text-blue border border-blue/20"
+                    : "border"
+                }`}
+                style={
+                  plan.popular
+                    ? {}
+                    : {
+                        borderColor: "var(--border)",
+                        color: "var(--text-tertiary)",
+                        opacity: 0.6,
+                      }
+                }
               >
                 Coming Soon
               </button>
@@ -825,7 +923,9 @@ function Pricing() {
                     className="flex items-center gap-3 text-sm"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    <Check size={15} className="text-blue shrink-0" />
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue/10">
+                      <Check size={12} className="text-blue" />
+                    </div>
                     {feature}
                   </li>
                 ))}
@@ -881,24 +981,30 @@ function EmailSignup() {
   return (
     <section
       id="signup"
-      className="py-28 lg:py-36 border-t"
+      className="relative py-28 lg:py-36 border-t overflow-hidden"
       style={{
         backgroundColor: "var(--bg-alt)",
         borderColor: "var(--border)",
       }}
     >
-      <div ref={ref} className="reveal mx-auto max-w-6xl px-6">
+      <div className="cta-glow" />
+
+      <div ref={ref} className="reveal relative mx-auto max-w-6xl px-6">
         <div
           className="relative mx-auto max-w-2xl rounded-3xl border p-10 sm:p-14 text-center overflow-hidden"
           style={{
             borderColor: "var(--border)",
             backgroundColor: "var(--bg-card)",
-            boxShadow: "var(--card-shadow)",
+            boxShadow: "0 25px 60px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02)",
           }}
         >
+          {/* Decorative gradient corners */}
+          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-blue/5 to-transparent rounded-tl-3xl pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-purple-500/5 to-transparent rounded-br-3xl pointer-events-none" />
+
           <div className="relative">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-blue/[0.08] mb-6">
-              <Mail size={20} className="text-blue" />
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue to-purple-500 mb-6 shadow-lg shadow-blue/20">
+              <Mail size={22} className="text-white" />
             </div>
 
             <h2
@@ -935,7 +1041,7 @@ function EmailSignup() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/20 disabled:opacity-50 whitespace-nowrap"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25 disabled:opacity-50 whitespace-nowrap"
                 >
                   {status === "loading" ? (
                     <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
@@ -951,7 +1057,7 @@ function EmailSignup() {
 
             {message && (
               <div
-                className={`mt-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
+                className={`mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium ${
                   status === "success"
                     ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
                     : "bg-red-500/10 text-red-600 dark:text-red-400"
@@ -973,15 +1079,18 @@ function EmailSignup() {
 function Footer() {
   return (
     <footer style={{ borderTop: "1px solid var(--border)" }}>
-      <div className="mx-auto max-w-6xl px-6 py-12 lg:py-16">
+      <div className="mx-auto max-w-6xl px-6 py-14 lg:py-16">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div>
             <span
-              className="text-lg font-bold tracking-tight"
+              className="text-xl font-bold tracking-tight"
               style={{ color: "var(--text-primary)" }}
             >
               Numifi
             </span>
+            <p className="mt-2 text-sm max-w-[240px]" style={{ color: "var(--text-tertiary)" }}>
+              AI-powered financial document conversion and analysis.
+            </p>
           </div>
 
           <div className="flex flex-wrap gap-x-16 gap-y-8">
@@ -1065,10 +1174,11 @@ function Footer() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen noise-overlay">
+    <div className="min-h-screen noise-overlay" style={{ backgroundColor: "var(--bg)" }}>
       <Navbar />
       <Hero />
       <TrustBar />
+      <Stats />
       <Features />
       <HowItWorks />
       <Pricing />
