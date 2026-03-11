@@ -2,9 +2,11 @@ import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import ReadingProgress from "@/components/ReadingProgress";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
 
-const SITE_URL = "https://numifi.com";
+const SITE_URL = "https://numifi.app";
 
 type Params = Promise<{ slug: string }>;
 
@@ -18,23 +20,32 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = getPostBySlug(slug);
   if (!post) return {};
 
+  const description = post.metaDescription || post.excerpt;
+  const url = `${SITE_URL}/blog/${post.slug}`;
+
   return {
-    title: `${post.title} — Numifi Blog`,
-    description: post.metaDescription || post.excerpt,
+    title: `${post.title} | Numifi`,
+    description,
     openGraph: {
       title: post.title,
-      description: post.metaDescription || post.excerpt,
+      description,
       type: "article",
-      url: `${SITE_URL}/blog/${post.slug}`,
+      url,
+      siteName: "Numifi",
       publishedTime: post.date,
       authors: [post.author],
       tags: post.tags,
     },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description,
+    },
     alternates: {
-      canonical: `${SITE_URL}/blog/${post.slug}`,
+      canonical: url,
     },
   };
 }
@@ -45,7 +56,7 @@ export default async function BlogPostPage({
   params: Params;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = getPostBySlug(slug);
   if (!post) notFound();
 
   const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
@@ -75,6 +86,7 @@ export default async function BlogPostPage({
 
   return (
     <div className="min-h-screen" style={{ background: "var(--bg)" }}>
+      <ReadingProgress />
       <Navbar />
 
       <script
@@ -82,7 +94,7 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="mx-auto max-w-3xl px-6 pt-32 pb-24">
+      <main className="mx-auto max-w-[720px] px-6 pt-32 pb-24">
         <a
           href="/blog"
           className="inline-flex items-center gap-2 text-sm font-medium text-blue mb-10 transition-colors hover:opacity-80"
@@ -133,10 +145,9 @@ export default async function BlogPostPage({
           </div>
         </header>
 
-        <article
-          className="blog-content"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <article className="blog-content">
+          <MarkdownRenderer content={post.content} />
+        </article>
       </main>
 
       <footer

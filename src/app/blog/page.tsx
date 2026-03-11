@@ -1,19 +1,25 @@
 import { getAllPosts } from "@/lib/blog";
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import { Clock, ArrowRight } from "lucide-react";
 import BlogGrid from "./BlogGrid";
 
 export const metadata: Metadata = {
-  title: "Blog — Numifi",
+  title: "Numifi Blog",
   description:
-    "Insights on AI-powered document conversion, financial data automation, and more from the Numifi team.",
+    "Financial document conversion tips, AI insights, and accounting automation guides from Numifi.",
   openGraph: {
-    title: "Blog — Numifi",
+    title: "Numifi Blog",
     description:
-      "Insights on AI-powered document conversion, financial data automation, and more from the Numifi team.",
+      "Financial document conversion tips, AI insights, and accounting automation guides from Numifi.",
     type: "website",
-    url: "https://numifi.com/blog",
+    url: "https://numifi.app/blog",
+    siteName: "Numifi",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Numifi Blog",
+    description:
+      "Financial document conversion tips, AI insights, and accounting automation guides from Numifi.",
   },
 };
 

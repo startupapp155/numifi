@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://numifi.com/sitemap.xml",
+    sitemap: "https://numifi.app/sitemap.xml",
   };
 }
