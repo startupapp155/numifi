@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ReadingProgress from "@/components/ReadingProgress";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
+import ViewCounter from "@/components/ViewCounter";
+import ShareButton from "@/components/ShareButton";
 import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
 
 const SITE_URL = "https://numifi.app";
@@ -95,13 +97,19 @@ export default async function BlogPostPage({
       />
 
       <main className="mx-auto max-w-[720px] px-6 pt-32 pb-24">
-        <a
-          href="/blog"
-          className="inline-flex items-center gap-2 text-sm font-medium text-blue mb-10 transition-colors hover:opacity-80"
-        >
-          <ArrowLeft size={14} />
-          Back to Blog
-        </a>
+        <div className="flex items-center justify-between mb-10">
+          <a
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm font-medium text-blue transition-colors hover:opacity-80"
+          >
+            <ArrowLeft size={14} />
+            Back to Blog
+          </a>
+          <ShareButton
+            url={`${SITE_URL}/blog/${post.slug}`}
+            title={post.title}
+          />
+        </div>
 
         <header className="mb-12">
           <div className="flex flex-wrap gap-2 mb-5">
@@ -142,6 +150,7 @@ export default async function BlogPostPage({
               <Clock size={14} />
               {post.readTime}
             </span>
+            <ViewCounter slug={post.slug} />
           </div>
         </header>
 
