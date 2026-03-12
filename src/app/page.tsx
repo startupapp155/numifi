@@ -352,57 +352,62 @@ function Stats() {
 
 // ─── Features ────────────────────────────────────────────────────────────────
 
+function FeatureConvertPreview() {
+  const formats = ["Excel", "CSV", "JSON", "QBO"];
+  return (
+    <div className="mt-6 flex flex-wrap gap-2">
+      {formats.map((f) => (
+        <span
+          key={f}
+          className="rounded-lg border px-3 py-1.5 text-[11px] font-semibold"
+          style={{ borderColor: "var(--border)", color: "var(--text-secondary)" }}
+        >
+          .{f.toLowerCase()}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function FeatureChatPreview() {
+  return (
+    <div className="mt-6 space-y-2.5">
+      <div
+        className="rounded-xl rounded-tl-sm px-3.5 py-2.5 text-xs max-w-[85%]"
+        style={{ backgroundColor: "var(--bg-alt)", color: "var(--text-secondary)" }}
+      >
+        &ldquo;What did I spend on restaurants?&rdquo;
+      </div>
+      <div className="flex justify-end">
+        <div className="rounded-xl rounded-tr-sm px-3.5 py-2.5 text-xs max-w-[85%] bg-blue/10 text-blue">
+          You spent <span className="font-semibold">$342.18</span> across 12 transactions
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FeatureAnalysisPreview() {
+  const bars = [65, 45, 80, 35, 90, 55, 70];
+  return (
+    <div className="mt-6 flex items-end gap-1.5 h-16">
+      {bars.map((h, i) => (
+        <div
+          key={i}
+          className="flex-1 rounded-t-sm bg-gradient-to-t from-purple-500/60 to-purple-400/20 transition-all duration-500"
+          style={{ height: `${h}%` }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function Features() {
   const headerRef = useReveal();
   const cardsRef = useReveal(0.05);
 
-  const features = [
-    {
-      icon: <FileText size={24} />,
-      title: "Convert Any Financial Document",
-      description:
-        "Bank statements, credit card statements, invoices, receipts, tax forms, brokerage reports — upload any financial PDF and get clean, structured data in Excel, CSV, or JSON. Works with any bank, any country, any format.",
-      gradient: "from-blue to-cyan-400",
-    },
-    {
-      icon: <BarChart3 size={24} />,
-      title: "Instant AI-Powered Analysis",
-      description:
-        "The moment your document is processed, AI categorizes every transaction automatically — groceries, restaurants, utilities, subscriptions, transfers. See spending trends, spot anomalies, and understand your cash flow without configuring a single rule.",
-      gradient: "from-purple-500 to-pink-400",
-    },
-    {
-      icon: <MessageSquare size={24} />,
-      title: "Chat With Your Financial Data",
-      description:
-        'Ask questions in plain English. "What did I spend on restaurants this month?" "Show me all transactions over $500." "Are there any duplicate charges?" Get instant answers and export any result as a spreadsheet or report.',
-      gradient: "from-amber-400 to-orange-500",
-    },
-    {
-      icon: <Shield size={24} />,
-      title: "Bank-Grade Security",
-      description:
-        "Your documents are encrypted with AES-256, automatically deleted within 24 hours, and processed with zero data retention AI. We never store or train on your financial data. Your privacy is not negotiable.",
-      gradient: "from-emerald-400 to-teal-500",
-    },
-    {
-      icon: <Download size={24} />,
-      title: "Export Anywhere",
-      description:
-        "Download as Excel, CSV, or JSON. Push directly to QuickBooks or Xero with one click. Connect via API or Zapier to automate your entire workflow. Your data, wherever you need it.",
-      gradient: "from-rose-400 to-red-500",
-    },
-    {
-      icon: <Users size={24} />,
-      title: "Built for Accountants & Bookkeepers",
-      description:
-        "Organize documents by client. Process hundreds of statements in batch. Verify accuracy with automatic balance reconciliation. Built for professionals who handle financial data every day, not just once a year.",
-      gradient: "from-indigo-400 to-blue-500",
-    },
-  ];
-
   return (
-    <section id="features" className="relative py-28 lg:py-36 overflow-hidden">
+    <section id="features" className="relative py-24 lg:py-32 overflow-hidden">
       <div className="orb orb-purple top-[10%] -left-[100px] w-[400px] h-[400px]" />
       <div className="orb orb-blue bottom-[10%] -right-[100px] w-[350px] h-[350px]" />
 
@@ -415,40 +420,103 @@ function Features() {
             className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
-            Everything you need to make sense of your finances
+            Everything you need, nothing you don&apos;t
           </h2>
-          <p className="mt-4 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            No more manual data entry. No more spreadsheet headaches. Just upload and let AI do the work.
-          </p>
         </div>
 
-        <div ref={cardsRef} className="reveal mt-16 lg:mt-20 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, i) => (
+        <div ref={cardsRef} className="reveal mt-14 lg:mt-16">
+          {/* Top row: 3 hero features with previews */}
+          <div className="grid gap-5 md:grid-cols-3">
             <div
-              key={feature.title}
-              className={`reveal-delay-${Math.min(i + 1, 4)} feature-card rounded-2xl border p-8`}
-              style={{
-                borderColor: "var(--border)",
-                boxShadow: "var(--card-shadow)",
-              }}
+              className="feature-card rounded-2xl border p-7"
+              style={{ borderColor: "var(--border)", boxShadow: "var(--card-shadow)" }}
             >
-              <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.gradient} text-white shadow-lg`}>
-                {feature.icon}
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue to-cyan-400 text-white shadow-lg">
+                <FileText size={20} />
               </div>
-              <h3
-                className="mt-6 text-lg font-semibold leading-snug"
-                style={{ color: "var(--text-primary)" }}
-              >
-                {feature.title}
+              <h3 className="mt-5 text-base font-semibold" style={{ color: "var(--text-primary)" }}>
+                Convert anything
               </h3>
-              <p
-                className="mt-3 text-[0.875rem] leading-relaxed"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                {feature.description}
+              <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Bank statements, invoices, receipts, tax forms — any financial PDF to structured data.
               </p>
+              <FeatureConvertPreview />
             </div>
-          ))}
+
+            <div
+              className="feature-card rounded-2xl border p-7"
+              style={{ borderColor: "var(--border)", boxShadow: "var(--card-shadow)" }}
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-400 text-white shadow-lg">
+                <BarChart3 size={20} />
+              </div>
+              <h3 className="mt-5 text-base font-semibold" style={{ color: "var(--text-primary)" }}>
+                Auto-categorize
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                AI labels every transaction — groceries, subscriptions, transfers. See trends instantly.
+              </p>
+              <FeatureAnalysisPreview />
+            </div>
+
+            <div
+              className="feature-card rounded-2xl border p-7"
+              style={{ borderColor: "var(--border)", boxShadow: "var(--card-shadow)" }}
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg">
+                <MessageSquare size={20} />
+              </div>
+              <h3 className="mt-5 text-base font-semibold" style={{ color: "var(--text-primary)" }}>
+                Chat with your data
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Ask questions in plain English. Get answers and export any result.
+              </p>
+              <FeatureChatPreview />
+            </div>
+          </div>
+
+          {/* Bottom row: 3 supporting features */}
+          <div className="grid gap-5 md:grid-cols-3 mt-5">
+            {[
+              {
+                icon: <Shield size={18} />,
+                gradient: "from-emerald-400 to-teal-500",
+                title: "Bank-grade security",
+                desc: "AES-256 encryption. Auto-deleted in 24h. Zero data retention.",
+              },
+              {
+                icon: <Download size={18} />,
+                gradient: "from-rose-400 to-red-500",
+                title: "Export anywhere",
+                desc: "Excel, CSV, JSON, QBO. Push to QuickBooks or Xero in one click.",
+              },
+              {
+                icon: <Users size={18} />,
+                gradient: "from-indigo-400 to-blue-500",
+                title: "Built for professionals",
+                desc: "Batch processing, client organization, balance reconciliation.",
+              },
+            ].map((f) => (
+              <div
+                key={f.title}
+                className="feature-card rounded-2xl border px-7 py-6 flex items-start gap-4"
+                style={{ borderColor: "var(--border)", boxShadow: "var(--card-shadow)" }}
+              >
+                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${f.gradient} text-white shadow-md`}>
+                  {f.icon}
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                    {f.title}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                    {f.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -462,36 +530,69 @@ function HowItWorks() {
 
   const steps = [
     {
-      icon: <Upload size={24} />,
-      number: "01",
-      title: "Upload Your Document",
-      desc: "Drag and drop any financial PDF — bank statement, invoice, receipt, tax form. Numifi automatically detects the document type and extracts data using AI. No templates, no configuration.",
+      icon: <Upload size={22} />,
+      title: "Upload",
+      desc: "Drag and drop any financial PDF, PNG, or JPG. Numifi detects the document type automatically.",
+      visual: (
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10">
+            <FileText size={16} className="text-red-400" />
+          </div>
+          <div>
+            <div className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>statement_march.pdf</div>
+            <div className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>2 pages · 145 KB</div>
+          </div>
+        </div>
+      ),
     },
     {
-      icon: <Sparkles size={24} />,
-      number: "02",
-      title: "Review AI-Powered Results",
-      desc: "See every transaction extracted into a clean table with automatic categorization. AI flags unusual transactions, identifies recurring charges, and shows a spending breakdown. Confidence scores tell you exactly how sure the AI is about each extraction.",
+      icon: <Sparkles size={22} />,
+      title: "Extract & categorize",
+      desc: "AI pulls every transaction into a structured table with automatic spending categories.",
+      visual: (
+        <div className="space-y-1.5">
+          {[
+            { cat: "Coffee", color: "bg-amber-400/15 text-amber-500" },
+            { cat: "Subscription", color: "bg-purple-400/15 text-purple-400" },
+            { cat: "Payroll", color: "bg-emerald-400/15 text-emerald-400" },
+          ].map((c) => (
+            <div key={c.cat} className="flex items-center gap-2">
+              <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold ${c.color}`}>{c.cat}</span>
+              <div className="flex-1 h-1.5 rounded-full" style={{ backgroundColor: "var(--border)" }} />
+            </div>
+          ))}
+        </div>
+      ),
     },
     {
-      icon: <Download size={24} />,
-      number: "03",
-      title: "Chat, Export, and Move On",
-      desc: "Ask the AI chatbot any question about your data. Export to Excel, CSV, or push directly to your accounting software. What used to take an hour now takes 30 seconds.",
+      icon: <Download size={22} />,
+      title: "Export & go",
+      desc: "Download as Excel, CSV, or push to your accounting software. Done in 30 seconds.",
+      visual: (
+        <div className="flex gap-2">
+          {[".xlsx", ".csv", ".json"].map((ext) => (
+            <div
+              key={ext}
+              className="flex items-center gap-1.5 rounded-lg border px-3 py-2"
+              style={{ borderColor: "var(--border)" }}
+            >
+              <Download size={12} className="text-blue" />
+              <span className="text-[11px] font-semibold" style={{ color: "var(--text-primary)" }}>{ext}</span>
+            </div>
+          ))}
+        </div>
+      ),
     },
   ];
 
   return (
     <section
       id="how-it-works"
-      className="relative py-28 lg:py-36 border-y"
-      style={{
-        backgroundColor: "var(--bg-alt)",
-        borderColor: "var(--border)",
-      }}
+      className="relative py-24 lg:py-32 border-y"
+      style={{ backgroundColor: "var(--bg-alt)", borderColor: "var(--border)" }}
     >
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="text-center max-w-2xl mx-auto">
+      <div className="mx-auto max-w-4xl px-6">
+        <div className="text-center max-w-xl mx-auto">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">
             How It Works
           </p>
@@ -499,24 +600,25 @@ function HowItWorks() {
             className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
             style={{ color: "var(--text-primary)" }}
           >
-            From PDF chaos to financial clarity in 3 steps
+            Three steps. Thirty seconds.
           </h2>
         </div>
 
-        <div ref={ref} className="reveal mt-20 relative">
-          {/* Connector line */}
-          <div className="hidden md:block absolute top-[38px] left-[calc(16.67%+30px)] right-[calc(16.67%+30px)]">
-            <div className="h-px w-full shimmer-line" style={{ backgroundColor: "var(--border)" }} />
-          </div>
+        <div ref={ref} className="reveal mt-16 relative">
+          {/* Vertical connector line */}
+          <div
+            className="hidden md:block absolute left-8 top-0 bottom-0 w-px"
+            style={{ background: "linear-gradient(to bottom, transparent, var(--border) 10%, var(--border) 90%, transparent)" }}
+          />
 
-          <div className="grid gap-12 md:grid-cols-3">
+          <div className="space-y-6">
             {steps.map((step, i) => (
               <div
-                key={step.number}
-                className={`reveal-delay-${i + 1} step-card text-center`}
+                key={step.title}
+                className={`reveal-delay-${i + 1} relative flex gap-6 md:gap-8 items-start`}
               >
-                <div
-                  className="step-icon relative mx-auto flex h-[76px] w-[76px] items-center justify-center rounded-2xl border"
+                {/* Step number */}
+                <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border"
                   style={{
                     borderColor: "var(--border)",
                     backgroundColor: "var(--bg-card)",
@@ -524,25 +626,141 @@ function HowItWorks() {
                   }}
                 >
                   <div className="text-blue">{step.icon}</div>
-                  <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-blue text-[10px] font-bold text-white shadow-lg shadow-blue/25">
-                    {step.number.replace("0", "")}
+                  <div className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-blue text-[9px] font-bold text-white shadow-md shadow-blue/25">
+                    {i + 1}
                   </div>
                 </div>
-                <h3
-                  className="mt-6 text-lg font-semibold"
-                  style={{ color: "var(--text-primary)" }}
+
+                {/* Content card */}
+                <div
+                  className="flex-1 rounded-2xl border p-6"
+                  style={{
+                    backgroundColor: "var(--bg-card)",
+                    borderColor: "var(--border)",
+                    boxShadow: "var(--card-shadow)",
+                  }}
                 >
-                  {step.title}
-                </h3>
-                <p
-                  className="mt-3 text-sm leading-relaxed max-w-xs mx-auto"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  {step.desc}
-                </p>
+                  <h3 className="text-base font-semibold mb-1.5" style={{ color: "var(--text-primary)" }}>
+                    {step.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
+                    {step.desc}
+                  </p>
+                  {step.visual}
+                </div>
               </div>
             ))}
           </div>
+
+          {/* CTA after steps */}
+          <div className="mt-10 text-center">
+            <a
+              href="/convert"
+              className="group inline-flex items-center gap-2 rounded-full bg-blue px-7 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25 hover:scale-[1.02]"
+            >
+              Try it now — it&apos;s free
+              <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── FAQ ─────────────────────────────────────────────────────────────────────
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      className="border-b last:border-b-0"
+      style={{ borderColor: "var(--border)" }}
+    >
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between gap-4 py-5 text-left"
+      >
+        <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+          {q}
+        </span>
+        <ChevronDown
+          size={16}
+          className={`shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          style={{ color: "var(--text-tertiary)" }}
+        />
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 ${
+          open ? "max-h-40 pb-5" : "max-h-0"
+        }`}
+      >
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+          {a}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function FAQ() {
+  const ref = useReveal(0.1);
+
+  const faqs = [
+    {
+      q: "What file types does Numifi support?",
+      a: "Numifi accepts PDF, PNG, and JPG files up to 10MB. We support bank statements, credit card statements, invoices, receipts, and tax forms from any bank or institution worldwide.",
+    },
+    {
+      q: "How accurate is the data extraction?",
+      a: "Our AI achieves 99%+ accuracy on most documents with automatic balance verification. Every extraction includes confidence scores so you know exactly how reliable each field is.",
+    },
+    {
+      q: "Is my financial data safe?",
+      a: "Yes. Documents are encrypted with AES-256, processed with zero-retention AI, and automatically deleted within 24 hours. We never store or train on your data.",
+    },
+    {
+      q: "What formats can I export to?",
+      a: "Excel (.xlsx), CSV, JSON, and QBO. You can also push directly to QuickBooks or Xero with one click, or connect via API and Zapier.",
+    },
+    {
+      q: "How much does Numifi cost?",
+      a: "Plans start at $24/month. The first 100 waitlist users get Pro (normally $49/month) free for 3 months. No credit card required to join the waitlist.",
+    },
+    {
+      q: "Can I process multiple documents at once?",
+      a: "Yes. Pro and Business plans include batch processing — upload hundreds of statements and process them all simultaneously.",
+    },
+  ];
+
+  return (
+    <section className="relative py-24 lg:py-32 overflow-hidden">
+      <div className="relative mx-auto max-w-3xl px-6">
+        <div className="text-center max-w-xl mx-auto mb-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">
+            FAQ
+          </p>
+          <h2
+            className="mt-4 text-3xl font-bold tracking-tight sm:text-[2.5rem] leading-tight"
+            style={{ color: "var(--text-primary)" }}
+          >
+            Common questions
+          </h2>
+        </div>
+
+        <div
+          ref={ref}
+          className="reveal rounded-2xl border px-6 sm:px-8"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            borderColor: "var(--border)",
+            boxShadow: "var(--card-shadow)",
+          }}
+        >
+          {faqs.map((faq) => (
+            <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+          ))}
         </div>
       </div>
     </section>
@@ -1068,6 +1286,7 @@ export default function Home() {
       <HowItWorks />
       <Pricing />
       <Comparison />
+      <FAQ />
       <EmailSignup />
       <Footer />
     </div>
