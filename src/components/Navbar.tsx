@@ -39,6 +39,7 @@ export default function Navbar() {
   const links: { label: string; href: string; highlight?: boolean }[] = [
     { label: "Features", href: "/#features" },
     { label: "Convert", href: "/convert", highlight: true },
+    { label: "Dashboard", href: "/dashboard" },
     { label: "Pricing", href: "/#pricing" },
     { label: "Blog", href: "/blog" },
   ];
