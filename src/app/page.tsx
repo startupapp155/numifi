@@ -283,7 +283,7 @@ function Hero() {
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="#signup"
+            href="#waitlist"
             className="group inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-hover hover:shadow-xl hover:shadow-blue/25 hover:scale-[1.02]"
           >
             Join Waitlist
@@ -739,7 +739,7 @@ function Pricing() {
               </div>
 
               <a
-                href="#signup"
+                href="#waitlist"
                 className={`mt-8 w-full rounded-xl py-3.5 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
                   plan.popular
                     ? "bg-blue text-white hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/20"
@@ -892,7 +892,7 @@ function Comparison() {
 function EmailSignup() {
   const ref = useReveal();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "duplicate" | "error">("idle");
   const [message, setMessage] = useState("");
 
   const handleSubmit = useCallback(
@@ -902,7 +902,7 @@ function EmailSignup() {
 
       setStatus("loading");
       try {
-        const res = await fetch("/api/signup", {
+        const res = await fetch("/api/subscribe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
@@ -911,11 +911,14 @@ function EmailSignup() {
 
         if (res.ok) {
           setStatus("success");
-          setMessage(data.message);
+          setMessage("You're on the list! We'll notify you when Numifi launches.");
           setEmail("");
+        } else if (res.status === 409) {
+          setStatus("duplicate");
+          setMessage("You're already signed up!");
         } else {
           setStatus("error");
-          setMessage(data.error);
+          setMessage(data.message || "Something went wrong. Try again.");
         }
       } catch {
         setStatus("error");
@@ -927,7 +930,7 @@ function EmailSignup() {
 
   return (
     <section
-      id="signup"
+      id="waitlist"
       className="relative py-28 lg:py-36 overflow-hidden stats-section"
     >
       <div className="cta-glow" />
@@ -983,10 +986,12 @@ function EmailSignup() {
               className={`mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium ${
                 status === "success"
                   ? "bg-emerald-500/15 text-emerald-400"
+                  : status === "duplicate"
+                  ? "bg-blue/15 text-blue"
                   : "bg-red-500/15 text-red-400"
               }`}
             >
-              {status === "success" && <Check size={14} />}
+              {(status === "success" || status === "duplicate") && <Check size={14} />}
               {message}
             </div>
           )}

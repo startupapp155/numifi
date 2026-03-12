@@ -157,4 +157,4 @@ Converting Chase bank statements to Excel does not have to be painful. For basic
 
 If you want the fastest, most accurate option with AI-powered analysis on top, Numifi is launching soon with AI extraction, automatic categorization, and a financial chatbot. Join the waitlist to be first in line — early users get Pro free for 3 months.
 
-[Join the Numifi waitlist — be first to try AI-powered statement conversion](https://numifi.app)
+[Join the Numifi waitlist — be first to try AI-powered statement conversion](/#waitlist)

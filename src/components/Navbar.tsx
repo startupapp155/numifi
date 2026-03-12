@@ -88,7 +88,7 @@ export default function Navbar() {
           </button>
 
           <a
-            href="/#signup"
+            href="/#waitlist"
             className="hidden rounded-full bg-blue px-5 py-2.5 text-[0.8125rem] font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25 sm:inline-flex items-center gap-2"
           >
             Join Waitlist
@@ -127,7 +127,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="/#signup"
+            href="/#waitlist"
             onClick={() => setMobileOpen(false)}
             className="block rounded-full bg-blue mt-2 px-4 py-2.5 text-center text-sm font-medium text-white"
           >
