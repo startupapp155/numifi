@@ -36,9 +36,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const links = [
+  const links: { label: string; href: string; highlight?: boolean }[] = [
     { label: "Features", href: "/#features" },
-    { label: "How It Works", href: "/#how-it-works" },
+    { label: "Convert", href: "/convert", highlight: true },
     { label: "Pricing", href: "/#pricing" },
     { label: "Blog", href: "/blog" },
   ];
@@ -69,8 +69,12 @@ export default function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="rounded-lg px-4 py-2 text-[0.8125rem] font-medium transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
-              style={{ color: "var(--text-secondary)" }}
+              className={`rounded-lg px-4 py-2 text-[0.8125rem] font-medium transition-colors ${
+                link.highlight
+                  ? "bg-blue/10 text-blue hover:bg-blue/[0.15]"
+                  : "hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+              }`}
+              style={link.highlight ? {} : { color: "var(--text-secondary)" }}
             >
               {link.label}
             </a>
