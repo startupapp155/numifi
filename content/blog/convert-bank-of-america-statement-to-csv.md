@@ -1,6 +1,6 @@
 ---
 title: "How to Convert Bank of America Statement PDF to CSV (2026 Guide)"
-date: "2026-03-14"
+date: "2026-03-12"
 excerpt: "Step-by-step guide to converting your Bank of America bank statement from PDF to CSV or Excel. Covers the free download method, manual conversion, and AI-powered tools."
 author: "Numifi Team"
 slug: "convert-bank-of-america-statement-to-csv"
