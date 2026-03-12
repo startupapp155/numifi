@@ -24,7 +24,6 @@ import {
   Target,
   Search,
   DollarSign,
-  ArrowDown,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
@@ -56,14 +55,22 @@ function useReveal(threshold = 0.15) {
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 
-function HeroMockup() {
+function HeroCard() {
+  const router = useRouter();
+  const [dragOver, setDragOver] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const goToConvert = useCallback(() => {
+    router.push("/convert");
+  }, [router]);
+
   return (
-    <div className="relative mx-auto mt-16 lg:mt-20 max-w-4xl">
+    <div className="relative mx-auto mt-12 lg:mt-16 max-w-5xl">
       <div className="hero-glow" />
 
-      {/* Floating badges — positioned outside overflow-hidden with z-10 */}
+      {/* Floating badges */}
       <div
-        className="absolute -left-16 top-12 z-10 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-md animate-[float-1_6s_ease-in-out_infinite]"
+        className="absolute -left-12 top-8 z-10 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-md animate-[float-1_6s_ease-in-out_infinite]"
         style={{
           backgroundColor: "var(--bg-card)",
           borderColor: "var(--border)",
@@ -80,7 +87,7 @@ function HeroMockup() {
       </div>
 
       <div
-        className="absolute -right-16 top-24 z-10 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-md animate-[float-2_7s_ease-in-out_infinite]"
+        className="absolute -right-12 top-20 z-10 hidden lg:flex items-center gap-2 rounded-xl border px-4 py-2.5 backdrop-blur-md animate-[float-2_7s_ease-in-out_infinite]"
         style={{
           backgroundColor: "var(--bg-card)",
           borderColor: "var(--border)",
@@ -96,77 +103,75 @@ function HeroMockup() {
         </div>
       </div>
 
+      {/* Main card */}
       <div
         className="relative rounded-2xl border overflow-hidden"
         style={{
           backgroundColor: "var(--bg-card)",
           borderColor: "var(--border)",
-          boxShadow:
-            "0 25px 80px -12px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.02)",
+          boxShadow: "0 25px 80px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.02)",
         }}
       >
-        <div
-          className="flex items-center gap-2 px-5 py-3.5 border-b"
-          style={{ borderColor: "var(--border)" }}
-        >
-          <div className="flex gap-1.5">
-            <div className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
-            <div className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
-            <div className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr]">
+          {/* Left: Upload zone */}
           <div
-            className="mx-auto rounded-md px-12 py-1 text-[11px] font-medium"
-            style={{
-              backgroundColor: "var(--bg-alt)",
-              color: "var(--text-tertiary)",
-            }}
+            className="p-8 lg:p-10 lg:border-r flex flex-col"
+            style={{ borderColor: "var(--border)" }}
           >
-            numifi.com
-          </div>
-          <div className="w-[52px]" />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-          {/* PDF side */}
-          <div className="p-6 md:p-8 md:border-r" style={{ borderColor: "var(--border)" }}>
-            <div className="flex items-center gap-2.5 mb-6">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-500/10">
-                <FileText size={15} className="text-red-500" />
-              </div>
-              <div>
-                <div className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>
-                  bank_statement_march.pdf
-                </div>
-                <div className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
-                  2 pages &middot; 145 KB
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-5 flex items-center gap-2">
-              <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "var(--border)" }}>
-                <div className="h-full w-full bg-gradient-to-r from-blue to-purple-500 rounded-full shimmer-line" />
-              </div>
-              <span className="text-[10px] font-semibold text-blue">Processed</span>
-            </div>
-
-            <div className="space-y-2.5">
-              {[0.85, 1, 0.7, 0.9, 0.6, 0.8, 1, 0.75].map((w, i) => (
-                <div
-                  key={i}
-                  className="h-2 rounded-full"
-                  style={{
-                    width: `${w * 100}%`,
-                    backgroundColor: "var(--border)",
-                    opacity: 0.6 - i * 0.04,
-                  }}
+            <div
+              className={`flex-1 rounded-xl border-2 border-dashed p-8 flex flex-col items-center justify-center text-center transition-all duration-300 cursor-pointer ${
+                dragOver
+                  ? "border-blue bg-blue/[0.06] scale-[1.01]"
+                  : "border-white/[0.1] hover:border-white/[0.18] hover:bg-white/[0.02]"
+              }`}
+              onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+              onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
+              onDrop={(e) => { e.preventDefault(); goToConvert(); }}
+              onClick={() => inputRef.current?.click()}
+              style={{ minHeight: "260px" }}
+            >
+              <input
+                ref={inputRef}
+                type="file"
+                accept=".pdf,.png,.jpg,.jpeg"
+                onChange={goToConvert}
+                className="hidden"
+              />
+              <div className={`flex h-14 w-14 items-center justify-center rounded-2xl mb-5 transition-all duration-300 ${
+                dragOver ? "bg-blue/20 scale-110" : "bg-white/[0.04]"
+              }`}>
+                <UploadCloud
+                  size={28}
+                  className={`transition-all duration-300 ${dragOver ? "text-blue" : ""}`}
+                  style={dragOver ? {} : { color: "var(--text-tertiary)" }}
                 />
-              ))}
+              </div>
+              <p className="text-base font-semibold mb-1.5" style={{ color: "var(--text-primary)" }}>
+                Drop your file here
+              </p>
+              <p className="text-xs mb-5" style={{ color: "var(--text-tertiary)" }}>
+                PDF, PNG, or JPG — up to 10MB
+              </p>
+              <button
+                onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
+                className="inline-flex items-center gap-2 rounded-full bg-blue px-6 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25"
+              >
+                Browse files
+              </button>
+            </div>
+
+            <div className="mt-4 flex items-center justify-center gap-4">
+              <div className="flex items-center gap-1.5">
+                <Shield size={11} style={{ color: "var(--text-tertiary)" }} />
+                <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>AES-256 encrypted</span>
+              </div>
+              <span className="text-[10px]" style={{ color: "var(--border)" }}>·</span>
+              <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>Auto-deleted in 24h</span>
             </div>
           </div>
 
-          {/* Table side */}
-          <div className="p-6 md:p-8">
+          {/* Right: Result preview */}
+          <div className="p-8 lg:p-10">
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
                 <FileSpreadsheet size={14} className="text-blue" />
@@ -180,7 +185,7 @@ function HeroMockup() {
             </div>
 
             <div
-              className="grid grid-cols-[60px_1fr_80px] gap-3 px-3 py-2 text-[10px] font-semibold uppercase tracking-wider mb-1"
+              className="grid grid-cols-[55px_1fr_75px] gap-3 px-3 py-2 text-[10px] font-semibold uppercase tracking-wider mb-1"
               style={{ color: "var(--text-tertiary)" }}
             >
               <span>Date</span>
@@ -198,7 +203,7 @@ function HeroMockup() {
               ].map((row) => (
                 <div
                   key={row.desc}
-                  className="grid grid-cols-[60px_1fr_80px] gap-3 items-center rounded-lg px-3 py-2.5 text-xs transition-colors"
+                  className="grid grid-cols-[55px_1fr_75px] gap-3 items-center rounded-lg px-3 py-2.5 text-xs"
                   style={{ backgroundColor: "var(--bg-alt)" }}
                 >
                   <span className="font-mono text-[11px]" style={{ color: "var(--text-tertiary)" }}>
@@ -209,9 +214,7 @@ function HeroMockup() {
                   </span>
                   <span
                     className={`text-right font-mono text-[11px] font-semibold ${
-                      row.amt.startsWith("+")
-                        ? "text-emerald-600 dark:text-emerald-400"
-                        : ""
+                      row.amt.startsWith("+") ? "text-emerald-600 dark:text-emerald-400" : ""
                     }`}
                     style={row.amt.startsWith("+") ? {} : { color: "var(--text-secondary)" }}
                   >
@@ -232,11 +235,9 @@ function HeroMockup() {
                   color: "var(--text-secondary)",
                 }}
               >
-                Total spending this month:{" "}
-                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
-                  $103.70
-                </span>
-                . Largest transaction: Whole Foods $67.32
+                Total spending:{" "}
+                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>$103.70</span>
+                . Largest: Whole Foods $67.32
               </div>
             </div>
           </div>
@@ -246,127 +247,31 @@ function HeroMockup() {
   );
 }
 
-function HeroDropZone() {
-  const router = useRouter();
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const goToConvert = useCallback(() => {
-    router.push("/convert");
-  }, [router]);
-
-  return (
-    <div
-      className={`mx-auto mt-14 lg:mt-16 max-w-2xl rounded-2xl border-2 border-dashed p-8 text-center transition-all duration-300 cursor-pointer ${
-        dragOver
-          ? "border-blue bg-blue/[0.06] scale-[1.01]"
-          : "border-white/[0.12] hover:border-white/[0.2] hover:bg-white/[0.01]"
-      }`}
-      onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-      onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
-      onDrop={(e) => { e.preventDefault(); goToConvert(); }}
-      onClick={() => inputRef.current?.click()}
-    >
-      <input
-        ref={inputRef}
-        type="file"
-        accept=".pdf,.png,.jpg,.jpeg"
-        onChange={goToConvert}
-        className="hidden"
-      />
-      <div className={`flex h-12 w-12 mx-auto items-center justify-center rounded-2xl mb-4 transition-all duration-300 ${
-        dragOver ? "bg-blue/20 scale-110" : "bg-white/[0.04]"
-      }`}>
-        <UploadCloud
-          size={24}
-          className={`transition-colors duration-300 ${dragOver ? "text-blue" : ""}`}
-          style={dragOver ? {} : { color: "var(--text-tertiary)" }}
-        />
-      </div>
-      <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>
-        Drop a file to start converting
-      </p>
-      <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>
-        PDF, PNG, JPG — bank statements, invoices, receipts, tax forms
-      </p>
-    </div>
-  );
-}
-
 function Hero() {
   return (
-    <section className="relative pt-32 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
+    <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-20 overflow-hidden">
       <div className="orb orb-blue -top-[200px] -left-[200px]" />
       <div className="orb orb-purple top-[100px] -right-[150px]" />
       <div className="orb orb-cyan -bottom-[100px] left-[30%]" />
       <div className="hero-grid" />
 
       <div className="relative mx-auto max-w-6xl px-6 text-center">
-        <div
-          className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium mb-8 backdrop-blur-sm"
-          style={{ borderColor: "var(--border)", color: "var(--text-secondary)", backgroundColor: "var(--bg-card)" }}
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-blue" />
-          </span>
-          Now in early access
-        </div>
-
         <h1
-          className="mx-auto max-w-4xl text-[2.5rem] font-bold leading-[1.08] tracking-tight sm:text-[3.25rem] lg:text-[3.75rem]"
+          className="mx-auto max-w-3xl text-[2.5rem] font-bold leading-[1.08] tracking-tight sm:text-[3.25rem] lg:text-[3.75rem]"
           style={{ color: "var(--text-primary)" }}
         >
-          Turn messy financial PDFs into{" "}
-          <span className="gradient-text">clean, organized data</span> — in seconds
+          Financial PDFs to{" "}
+          <span className="gradient-text">clean data</span> — instantly
         </h1>
 
         <p
-          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed"
+          className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
           style={{ color: "var(--text-secondary)" }}
         >
-          Upload bank statements, invoices, receipts, or tax forms. Numifi extracts every
-          transaction, categorizes your spending automatically, and lets you chat with your
-          financial data like talking to an accountant who never sleeps.
+          Drop a bank statement, invoice, or receipt. Get structured, categorized transactions in seconds.
         </p>
 
-        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a
-            href="/convert"
-            className="group inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-hover hover:shadow-xl hover:shadow-blue/25 hover:scale-[1.02]"
-          >
-            Try It Now
-            <ArrowRight
-              size={15}
-              className="transition-transform duration-200 group-hover:translate-x-0.5"
-            />
-          </a>
-          <a
-            href="#how-it-works"
-            className="group inline-flex items-center gap-2 rounded-full border px-8 py-3.5 text-sm font-semibold transition-all duration-300 hover:shadow-sm hover:scale-[1.02]"
-            style={{
-              borderColor: "var(--border)",
-              color: "var(--text-secondary)",
-            }}
-          >
-            See How It Works
-            <ChevronDown
-              size={15}
-              className="transition-transform duration-200 group-hover:translate-y-0.5"
-            />
-          </a>
-        </div>
-
-        <p
-          className="mt-6 text-sm"
-          style={{ color: "var(--text-tertiary)" }}
-        >
-          No credit card required. First 100 users get Pro free for 3 months.
-        </p>
-
-        <HeroMockup />
-
-        <HeroDropZone />
+        <HeroCard />
       </div>
     </section>
   );
