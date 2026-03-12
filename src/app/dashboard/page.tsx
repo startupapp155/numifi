@@ -38,6 +38,7 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+import Navbar from "@/components/Navbar";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -55,21 +56,26 @@ const NAV_ITEMS: { id: Tab; label: string; icon: React.ReactNode }[] = [
 
 function DemoBanner({ onDismiss }: { onDismiss: () => void }) {
   return (
-    <div className="bg-amber-500/90 text-black px-4 py-2.5 flex items-center justify-center gap-3 text-sm relative">
-      <span className="font-medium">
+    <div
+      className="px-4 py-2.5 flex items-center justify-center gap-3 text-sm relative"
+      style={{
+        background: "linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #06B6D4 100%)",
+      }}
+    >
+      <span className="font-medium text-white">
         You&apos;re viewing a demo of Numifi.{" "}
         <span className="hidden sm:inline">Join the waitlist to get early access.</span>
       </span>
       <a
         href="/#waitlist"
-        className="inline-flex items-center gap-1.5 rounded-full bg-black/10 px-4 py-1 text-xs font-semibold hover:bg-black/20 transition-colors"
+        className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-4 py-1 text-xs font-semibold text-white hover:bg-white/30 transition-colors"
       >
         Join Waitlist
         <ArrowRight size={12} />
       </a>
       <button
         onClick={onDismiss}
-        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-black/10 rounded transition-colors"
+        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-white/20 rounded text-white/80 hover:text-white transition-colors"
       >
         <X size={14} />
       </button>
@@ -92,23 +98,34 @@ function Sidebar({
 }) {
   return (
     <>
-      {/* Mobile overlay */}
       {open && (
-        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={onClose} />
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden" onClick={onClose} />
       )}
 
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-50 w-[250px] flex flex-col transition-transform duration-300 lg:translate-x-0 lg:static lg:z-auto ${
-          open ? "translate-x-0" : "-translate-x-full"
-        }`}
-        style={{ backgroundColor: "#0F172A" }}
+        className={`fixed top-0 left-0 bottom-0 z-50 w-[260px] flex flex-col transition-transform duration-300 lg:translate-x-0 lg:static lg:z-auto border-r`}
+        style={{
+          backgroundColor: "var(--bg)",
+          borderColor: "var(--border)",
+        }}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between h-16 px-6 border-b border-white/[0.06]">
-          <a href="/" className="text-lg font-bold text-white tracking-tight">
+        <div
+          className="flex items-center justify-between h-[72px] px-6 border-b"
+          style={{ borderColor: "var(--border)" }}
+        >
+          <a
+            href="/"
+            className="text-xl font-bold tracking-tight"
+            style={{ color: "var(--text-primary)" }}
+          >
             Numifi
           </a>
-          <button onClick={onClose} className="lg:hidden text-gray-400 hover:text-white">
+          <button
+            onClick={onClose}
+            className="lg:hidden p-1 rounded-lg transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+            style={{ color: "var(--text-tertiary)" }}
+          >
             <X size={18} />
           </button>
         </div>
@@ -122,11 +139,12 @@ function Sidebar({
                 onTabChange(item.id);
                 onClose();
               }}
-              className={`w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-[0.8125rem] font-medium transition-all duration-200 ${
                 tab === item.id
-                  ? "bg-blue-500/10 text-blue-400"
-                  : "text-gray-400 hover:bg-white/[0.04] hover:text-gray-200"
+                  ? "bg-blue/10 text-blue shadow-sm"
+                  : "hover:bg-black/[0.03] dark:hover:bg-white/[0.04]"
               }`}
+              style={tab !== item.id ? { color: "var(--text-secondary)" } : {}}
             >
               {item.icon}
               {item.label}
@@ -135,14 +153,18 @@ function Sidebar({
         </nav>
 
         {/* User */}
-        <div className="px-4 py-4 border-t border-white/[0.06]">
+        <div className="px-4 py-4 border-t" style={{ borderColor: "var(--border)" }}>
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs font-bold">
+            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-blue to-purple-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
               D
             </div>
             <div className="min-w-0">
-              <div className="text-sm font-medium text-gray-200 truncate">Demo User</div>
-              <div className="text-[11px] text-gray-500 truncate">demo@numifi.app</div>
+              <div className="text-sm font-medium truncate" style={{ color: "var(--text-primary)" }}>
+                Demo User
+              </div>
+              <div className="text-[11px] truncate" style={{ color: "var(--text-tertiary)" }}>
+                demo@numifi.app
+              </div>
             </div>
           </div>
         </div>
@@ -163,30 +185,59 @@ function TopBar({
   return (
     <div
       className="flex items-center justify-between h-16 px-4 sm:px-6 border-b"
-      style={{ borderColor: "rgba(255,255,255,0.06)" }}
+      style={{ borderColor: "var(--border)" }}
     >
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
-          className="lg:hidden text-gray-400 hover:text-white p-1"
+          className="lg:hidden p-1 rounded-lg transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+          style={{ color: "var(--text-secondary)" }}
         >
           <Menu size={20} />
         </button>
-        <h1 className="text-lg font-semibold text-white">{title}</h1>
+        <h1 className="text-lg font-semibold" style={{ color: "var(--text-primary)" }}>
+          {title}
+        </h1>
       </div>
       <div className="flex items-center gap-3">
-        <button className="relative p-2 text-gray-400 hover:text-white transition-colors">
+        <button
+          className="relative flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+          style={{ color: "var(--text-secondary)" }}
+        >
           <Bell size={18} />
-          <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-blue-500" />
+          <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-blue" />
         </button>
         <a
           href="/convert"
-          className="hidden sm:inline-flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600 transition-colors"
+          className="hidden sm:inline-flex items-center gap-2 rounded-full bg-blue px-5 py-2.5 text-[0.8125rem] font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25"
         >
           <Upload size={15} />
           Upload Document
         </a>
       </div>
+    </div>
+  );
+}
+
+// ─── Card wrapper (matches feature-card style) ─────────────────────────────
+
+function DashCard({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`rounded-2xl border p-5 transition-all duration-300 ${className}`}
+      style={{
+        background: "var(--feature-card-bg)",
+        borderColor: "var(--border)",
+        boxShadow: "var(--card-shadow)",
+      }}
+    >
+      {children}
     </div>
   );
 }
@@ -222,19 +273,28 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl p-5" style={{ backgroundColor: "#334155" }}>
+    <DashCard>
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-gray-400">{label}</span>
-        <span className="text-gray-500">{icon}</span>
+        <span className="text-xs font-medium" style={{ color: "var(--text-tertiary)" }}>
+          {label}
+        </span>
+        <div
+          className="flex h-8 w-8 items-center justify-center rounded-lg"
+          style={{ backgroundColor: "rgba(59,130,246,0.08)", color: "#3B82F6" }}
+        >
+          {icon}
+        </div>
       </div>
-      <div className="text-2xl font-bold text-white">{value}</div>
+      <div className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
+        {value}
+      </div>
       {sub && (
-        <div className="mt-1 flex items-center gap-1 text-xs font-medium text-emerald-400">
+        <div className="mt-1.5 flex items-center gap-1 text-xs font-medium text-emerald-500">
           <TrendingUp size={12} />
           {sub}
         </div>
       )}
-    </div>
+    </DashCard>
   );
 }
 
@@ -252,27 +312,33 @@ function HomeTab() {
       {/* Two columns */}
       <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6">
         {/* Recent Documents */}
-        <div className="rounded-xl p-5" style={{ backgroundColor: "#334155" }}>
-          <h2 className="text-sm font-semibold text-white mb-4">Recent Documents</h2>
+        <DashCard>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
+            Recent Documents
+          </h2>
           <div className="space-y-1">
             {RECENT_DOCS.map((doc) => (
               <div
                 key={doc.name}
-                className="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-white/[0.03] cursor-pointer transition-colors"
+                className="flex items-center gap-3 rounded-xl px-3 py-2.5 cursor-pointer transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.03]"
               >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-500/10">
-                  <FileText size={14} className="text-red-400" />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-500/10">
+                  <FileText size={15} className="text-red-500" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-sm font-medium text-gray-200 truncate">{doc.name}</div>
-                  <div className="text-[11px] text-gray-500">{doc.type} · {doc.date}</div>
+                  <div className="text-sm font-medium truncate" style={{ color: "var(--text-primary)" }}>
+                    {doc.name}
+                  </div>
+                  <div className="text-[11px]" style={{ color: "var(--text-tertiary)" }}>
+                    {doc.type} · {doc.date}
+                  </div>
                 </div>
                 {doc.status === "completed" ? (
-                  <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-400">
+                  <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-500">
                     Completed
                   </span>
                 ) : (
-                  <span className="flex items-center gap-1 rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-amber-400">
+                  <span className="flex items-center gap-1 rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-amber-500">
                     <Loader2 size={10} className="animate-spin" />
                     Processing
                   </span>
@@ -280,11 +346,13 @@ function HomeTab() {
               </div>
             ))}
           </div>
-        </div>
+        </DashCard>
 
         {/* Spending Chart */}
-        <div className="rounded-xl p-5" style={{ backgroundColor: "#334155" }}>
-          <h2 className="text-sm font-semibold text-white mb-4">Spending by Category</h2>
+        <DashCard>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
+            Spending by Category
+          </h2>
           <div className="h-[200px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -309,12 +377,16 @@ function HomeTab() {
             {SPENDING_DATA.map((d) => (
               <div key={d.name} className="flex items-center gap-2">
                 <div className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: d.color }} />
-                <span className="text-[11px] text-gray-400 truncate">{d.name}</span>
-                <span className="text-[11px] font-medium text-gray-300 ml-auto">${d.value.toLocaleString()}</span>
+                <span className="text-[11px] truncate" style={{ color: "var(--text-tertiary)" }}>
+                  {d.name}
+                </span>
+                <span className="text-[11px] font-medium ml-auto" style={{ color: "var(--text-secondary)" }}>
+                  ${d.value.toLocaleString()}
+                </span>
               </div>
             ))}
           </div>
-        </div>
+        </DashCard>
       </div>
     </div>
   );
@@ -363,30 +435,43 @@ function DocumentsTab() {
 
   return (
     <div className="space-y-5">
-      {/* Search + Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search documents..."
-            className="w-full rounded-lg bg-white/[0.05] border border-white/[0.08] pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500/50"
-          />
-        </div>
+      {/* Search */}
+      <div className="relative max-w-md">
+        <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--text-tertiary)" }} />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search documents..."
+          className="w-full rounded-xl border pl-10 pr-4 py-2.5 text-sm transition-colors"
+          style={{
+            backgroundColor: "var(--input-bg)",
+            borderColor: "var(--border)",
+            color: "var(--text-primary)",
+          }}
+        />
       </div>
 
+      {/* Filters */}
       <div className="flex flex-wrap gap-2">
         {DOC_FILTERS.map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
               filter === f
-                ? "bg-blue-500 text-white"
-                : "bg-white/[0.05] text-gray-400 hover:bg-white/[0.08]"
+                ? "bg-blue text-white shadow-sm shadow-blue/25"
+                : "border"
             }`}
+            style={
+              filter !== f
+                ? {
+                    borderColor: "var(--border)",
+                    color: "var(--text-secondary)",
+                    backgroundColor: "var(--bg-card)",
+                  }
+                : {}
+            }
           >
             {f}
           </button>
@@ -394,9 +479,12 @@ function DocumentsTab() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl overflow-hidden" style={{ backgroundColor: "#334155" }}>
+      <DashCard className="!p-0 overflow-hidden">
         {/* Header */}
-        <div className="hidden sm:grid grid-cols-[1fr_120px_100px_60px_90px_100px] gap-3 px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-gray-500 border-b border-white/[0.06]">
+        <div
+          className="hidden sm:grid grid-cols-[1fr_120px_100px_60px_90px_100px] gap-3 px-5 py-3 text-[11px] font-semibold uppercase tracking-wider border-b"
+          style={{ color: "var(--text-tertiary)", borderColor: "var(--border)" }}
+        >
           <span>Filename</span>
           <span>Type</span>
           <span>Date</span>
@@ -409,49 +497,61 @@ function DocumentsTab() {
         {filtered.map((doc) => (
           <div
             key={doc.name}
-            className="grid grid-cols-1 sm:grid-cols-[1fr_120px_100px_60px_90px_100px] gap-2 sm:gap-3 items-center px-5 py-3 border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors"
+            className="grid grid-cols-1 sm:grid-cols-[1fr_120px_100px_60px_90px_100px] gap-2 sm:gap-3 items-center px-5 py-3 border-b transition-colors hover:bg-black/[0.015] dark:hover:bg-white/[0.02]"
+            style={{ borderColor: "var(--border-light)" }}
           >
             <div className="flex items-center gap-2.5 min-w-0">
-              <FileText size={14} className="text-red-400 shrink-0" />
-              <span className="text-sm text-gray-200 truncate">{doc.name}</span>
+              <FileText size={14} className="text-red-500 shrink-0" />
+              <span className="text-sm truncate" style={{ color: "var(--text-primary)" }}>
+                {doc.name}
+              </span>
             </div>
-            <span className="text-xs text-gray-400">{doc.type}</span>
-            <span className="text-xs text-gray-500">{doc.date}</span>
-            <span className="text-xs text-gray-500">{doc.pages}</span>
+            <span className="text-xs" style={{ color: "var(--text-secondary)" }}>{doc.type}</span>
+            <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>{doc.date}</span>
+            <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>{doc.pages}</span>
             <span>
               {doc.status === "completed" ? (
-                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
+                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-500">
                   Completed
                 </span>
               ) : (
-                <span className="flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-400 w-fit">
+                <span className="flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-500 w-fit">
                   <Loader2 size={9} className="animate-spin" />
                   Processing
                 </span>
               )}
             </span>
             <div className="flex items-center gap-2">
-              <button className="text-gray-400 hover:text-white transition-colors">
+              <button
+                className="flex h-7 w-7 items-center justify-center rounded-lg transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 <Eye size={14} />
               </button>
               <div className="relative">
                 <button
                   onClick={() => setOpenDropdown(openDropdown === doc.name ? null : doc.name)}
-                  className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"
+                  className="flex items-center gap-1 text-xs font-medium transition-colors hover:text-blue"
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   Export
                   <ChevronDown size={12} />
                 </button>
                 {openDropdown === doc.name && (
                   <div
-                    className="absolute right-0 top-full mt-1 rounded-lg border p-1.5 z-10 min-w-[100px]"
-                    style={{ backgroundColor: "#1E293B", borderColor: "rgba(255,255,255,0.08)" }}
+                    className="absolute right-0 top-full mt-1 rounded-xl border p-1.5 z-10 min-w-[100px]"
+                    style={{
+                      backgroundColor: "var(--bg-card)",
+                      borderColor: "var(--border)",
+                      boxShadow: "var(--card-shadow-hover)",
+                    }}
                   >
                     {["Excel", "CSV", "JSON", "QBO"].map((fmt) => (
                       <button
                         key={fmt}
                         onClick={() => setOpenDropdown(null)}
-                        className="block w-full text-left rounded px-3 py-1.5 text-xs text-gray-300 hover:bg-white/[0.06]"
+                        className="block w-full text-left rounded-lg px-3 py-1.5 text-xs transition-colors hover:bg-black/[0.03] dark:hover:bg-white/[0.04]"
+                        style={{ color: "var(--text-secondary)" }}
                       >
                         {fmt}
                       </button>
@@ -464,9 +564,11 @@ function DocumentsTab() {
         ))}
 
         {filtered.length === 0 && (
-          <div className="px-5 py-10 text-center text-sm text-gray-500">No documents found.</div>
+          <div className="px-5 py-10 text-center text-sm" style={{ color: "var(--text-tertiary)" }}>
+            No documents found.
+          </div>
         )}
-      </div>
+      </DashCard>
     </div>
   );
 }
@@ -503,7 +605,7 @@ function AnalysisTab() {
   return (
     <div className="space-y-6">
       {/* Date range */}
-      <div className="flex items-center gap-2 text-sm text-gray-400">
+      <div className="flex items-center gap-2 text-sm" style={{ color: "var(--text-tertiary)" }}>
         <Clock size={14} />
         <span>Feb 1 - Feb 28, 2026</span>
       </div>
@@ -511,89 +613,133 @@ function AnalysisTab() {
       {/* Charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Monthly Spending */}
-        <div className="rounded-xl p-5" style={{ backgroundColor: "#334155" }}>
-          <h3 className="text-sm font-semibold text-white mb-4">Monthly Spending Trend</h3>
+        <DashCard>
+          <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
+            Monthly Spending Trend
+          </h3>
           <div className="h-[220px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={MONTHLY_SPEND}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(1)}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis dataKey="month" tick={{ fontSize: 11, fill: "var(--text-tertiary)" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 11, fill: "var(--text-tertiary)" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(1)}k`} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: "#1E293B", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", fontSize: "12px" }}
-                  labelStyle={{ color: "#94A3B8" }}
+                  contentStyle={{
+                    backgroundColor: "var(--bg-card)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "12px",
+                    fontSize: "12px",
+                    color: "var(--text-primary)",
+                    boxShadow: "var(--card-shadow-hover)",
+                  }}
+                  labelStyle={{ color: "var(--text-tertiary)" }}
                   formatter={(value) => [`$${Number(value).toLocaleString()}`, "Spending"]}
                 />
-                <Line type="monotone" dataKey="amount" stroke="#3B82F6" strokeWidth={2.5} dot={{ r: 4, fill: "#3B82F6" }} />
+                <Line type="monotone" dataKey="amount" stroke="#3B82F6" strokeWidth={2.5} dot={{ r: 4, fill: "#3B82F6", strokeWidth: 0 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </DashCard>
 
         {/* Income vs Expenses */}
-        <div className="rounded-xl p-5" style={{ backgroundColor: "#334155" }}>
-          <h3 className="text-sm font-semibold text-white mb-4">Income vs Expenses</h3>
+        <DashCard>
+          <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
+            Income vs Expenses
+          </h3>
           <div className="h-[220px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={INCOME_VS_EXPENSE}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(1)}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis dataKey="month" tick={{ fontSize: 11, fill: "var(--text-tertiary)" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 11, fill: "var(--text-tertiary)" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(1)}k`} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: "#1E293B", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", fontSize: "12px" }}
-                  labelStyle={{ color: "#94A3B8" }}
+                  contentStyle={{
+                    backgroundColor: "var(--bg-card)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "12px",
+                    fontSize: "12px",
+                    color: "var(--text-primary)",
+                    boxShadow: "var(--card-shadow-hover)",
+                  }}
+                  labelStyle={{ color: "var(--text-tertiary)" }}
                   formatter={(value) => [`$${Number(value).toLocaleString()}`]}
                 />
-                <Bar dataKey="income" fill="#10B981" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="expenses" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="income" fill="#10B981" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="expenses" fill="#3B82F6" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-3 flex items-center justify-center gap-6 text-xs text-gray-400">
-            <div className="flex items-center gap-1.5"><div className="h-2.5 w-2.5 rounded-sm bg-emerald-500" /> Income</div>
-            <div className="flex items-center gap-1.5"><div className="h-2.5 w-2.5 rounded-sm bg-blue-500" /> Expenses</div>
+          <div className="mt-3 flex items-center justify-center gap-6 text-xs" style={{ color: "var(--text-tertiary)" }}>
+            <div className="flex items-center gap-1.5">
+              <div className="h-2.5 w-2.5 rounded-sm bg-emerald-500" /> Income
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="h-2.5 w-2.5 rounded-sm bg-blue" /> Expenses
+            </div>
           </div>
-        </div>
+        </DashCard>
       </div>
 
       {/* Top Merchants */}
-      <div className="rounded-xl p-5" style={{ backgroundColor: "#334155" }}>
-        <h3 className="text-sm font-semibold text-white mb-4">Top Merchants</h3>
+      <DashCard>
+        <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
+          Top Merchants
+        </h3>
         <div className="space-y-3">
           {TOP_MERCHANTS.map((m) => {
             const maxAmount = TOP_MERCHANTS[0].amount;
             return (
               <div key={m.name} className="flex items-center gap-3">
-                <span className="text-sm text-gray-300 w-28 shrink-0 truncate">{m.name}</span>
-                <div className="flex-1 h-6 rounded-md overflow-hidden bg-white/[0.04]">
+                <span className="text-sm w-28 shrink-0 truncate" style={{ color: "var(--text-secondary)" }}>
+                  {m.name}
+                </span>
+                <div
+                  className="flex-1 h-7 rounded-lg overflow-hidden"
+                  style={{ backgroundColor: "rgba(59,130,246,0.06)" }}
+                >
                   <div
-                    className="h-full rounded-md bg-blue-500/30 flex items-center px-2.5"
-                    style={{ width: `${(m.amount / maxAmount) * 100}%` }}
+                    className="h-full rounded-lg flex items-center px-3"
+                    style={{
+                      width: `${(m.amount / maxAmount) * 100}%`,
+                      background: "linear-gradient(90deg, rgba(59,130,246,0.15), rgba(59,130,246,0.25))",
+                    }}
                   >
-                    <span className="text-[11px] font-semibold text-blue-300">${m.amount}</span>
+                    <span className="text-[11px] font-semibold text-blue">${m.amount}</span>
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
-      </div>
+      </DashCard>
 
       {/* Anomalies */}
       <div className="space-y-3">
-        <h3 className="text-sm font-semibold text-white">Anomalies Detected</h3>
-        <div className="rounded-xl p-4 border border-amber-500/20 bg-amber-500/[0.05] flex items-start gap-3">
-          <AlertTriangle size={16} className="text-amber-400 shrink-0 mt-0.5" />
+        <h3 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+          Anomalies Detected
+        </h3>
+        <div
+          className="rounded-2xl p-4 border flex items-start gap-3"
+          style={{ borderColor: "rgba(245,158,11,0.2)", backgroundColor: "rgba(245,158,11,0.04)" }}
+        >
+          <AlertTriangle size={16} className="text-amber-500 shrink-0 mt-0.5" />
           <div>
-            <div className="text-sm font-medium text-amber-300">Unusual charge</div>
-            <div className="text-xs text-gray-400 mt-0.5">$2,499.00 at ELECTRONICS STORE on Feb 12 — this is 5x your average transaction</div>
+            <div className="text-sm font-medium text-amber-600 dark:text-amber-400">Unusual charge</div>
+            <div className="text-xs mt-0.5" style={{ color: "var(--text-tertiary)" }}>
+              $2,499.00 at ELECTRONICS STORE on Feb 12 — this is 5x your average transaction
+            </div>
           </div>
         </div>
-        <div className="rounded-xl p-4 border border-orange-500/20 bg-orange-500/[0.05] flex items-start gap-3">
-          <AlertTriangle size={16} className="text-orange-400 shrink-0 mt-0.5" />
+        <div
+          className="rounded-2xl p-4 border flex items-start gap-3"
+          style={{ borderColor: "rgba(249,115,22,0.2)", backgroundColor: "rgba(249,115,22,0.04)" }}
+        >
+          <AlertTriangle size={16} className="text-orange-500 shrink-0 mt-0.5" />
           <div>
-            <div className="text-sm font-medium text-orange-300">Duplicate charge</div>
-            <div className="text-xs text-gray-400 mt-0.5">$14.99 at NETFLIX on Feb 1 and Feb 2</div>
+            <div className="text-sm font-medium text-orange-600 dark:text-orange-400">Duplicate charge</div>
+            <div className="text-xs mt-0.5" style={{ color: "var(--text-tertiary)" }}>
+              $14.99 at NETFLIX on Feb 1 and Feb 2
+            </div>
           </div>
         </div>
       </div>
@@ -641,23 +787,31 @@ function ChatTab() {
         {MOCK_MESSAGES.map((msg, i) => (
           <div key={i} className={`flex gap-3 ${msg.role === "user" ? "justify-end" : ""}`}>
             {msg.role === "ai" && (
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 mt-0.5">
-                <MessageSquare size={12} className="text-white" />
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue to-purple-500 mt-0.5 shadow-sm shadow-blue/25">
+                <MessageSquare size={13} className="text-white" />
               </div>
             )}
             <div
               className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                 msg.role === "user"
-                  ? "bg-blue-500 text-white rounded-tr-sm"
-                  : "rounded-tl-sm text-gray-300"
+                  ? "bg-blue text-white rounded-tr-sm shadow-sm shadow-blue/20"
+                  : "rounded-tl-sm border"
               }`}
-              style={msg.role === "ai" ? { backgroundColor: "#334155" } : {}}
+              style={
+                msg.role === "ai"
+                  ? {
+                      background: "var(--feature-card-bg)",
+                      borderColor: "var(--border)",
+                      color: "var(--text-secondary)",
+                    }
+                  : {}
+              }
             >
               {msg.content.split("\n").map((line, j) => (
                 <span key={j}>
                   {line.split(/(\*\*[^*]+\*\*)/).map((part, k) =>
                     part.startsWith("**") && part.endsWith("**") ? (
-                      <strong key={k} className="font-semibold text-white">
+                      <strong key={k} className="font-semibold" style={{ color: "var(--text-primary)" }}>
                         {part.slice(2, -2)}
                       </strong>
                     ) : (
@@ -673,9 +827,15 @@ function ChatTab() {
 
         {showNotice && (
           <div className="flex justify-center">
-            <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 px-5 py-3 text-center">
-              <p className="text-sm text-blue-300 font-medium">Chat will be available when Numifi launches.</p>
-              <a href="/#waitlist" className="text-xs text-blue-400 hover:underline mt-1 inline-block">
+            <div
+              className="rounded-2xl border px-5 py-3 text-center"
+              style={{
+                backgroundColor: "rgba(59,130,246,0.06)",
+                borderColor: "rgba(59,130,246,0.15)",
+              }}
+            >
+              <p className="text-sm text-blue font-medium">Chat will be available when Numifi launches.</p>
+              <a href="/#waitlist" className="text-xs text-blue/70 hover:text-blue hover:underline mt-1 inline-block">
                 Join the waitlist
               </a>
             </div>
@@ -684,7 +844,7 @@ function ChatTab() {
       </div>
 
       {/* Input */}
-      <div className="border-t pt-4" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+      <div className="border-t pt-4" style={{ borderColor: "var(--border)" }}>
         <div className="flex items-center gap-3">
           <input
             type="text"
@@ -692,11 +852,16 @@ function ChatTab() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             placeholder="Ask anything about your finances..."
-            className="flex-1 rounded-xl bg-white/[0.05] border border-white/[0.08] px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500/50"
+            className="flex-1 rounded-xl border px-4 py-3 text-sm transition-colors"
+            style={{
+              backgroundColor: "var(--input-bg)",
+              borderColor: "var(--border)",
+              color: "var(--text-primary)",
+            }}
           />
           <button
             onClick={handleSend}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue text-white hover:bg-blue-hover transition-all duration-200 hover:shadow-lg hover:shadow-blue/25"
           >
             <Send size={16} />
           </button>
@@ -710,62 +875,89 @@ function ChatTab() {
 
 function SettingsTab() {
   return (
-    <div className="max-w-2xl space-y-8">
+    <div className="max-w-2xl space-y-6">
       {/* Profile */}
-      <div className="rounded-xl p-6" style={{ backgroundColor: "#334155" }}>
-        <h2 className="text-sm font-semibold text-white mb-5">Profile</h2>
+      <DashCard>
+        <h2 className="text-sm font-semibold mb-5" style={{ color: "var(--text-primary)" }}>
+          Profile
+        </h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1.5">Name</label>
+            <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-tertiary)" }}>
+              Name
+            </label>
             <input
               type="text"
               value="Demo User"
               disabled
-              className="w-full rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5 text-sm text-gray-400 cursor-not-allowed"
+              className="w-full rounded-xl border px-4 py-2.5 text-sm cursor-not-allowed opacity-60"
+              style={{
+                backgroundColor: "var(--input-bg)",
+                borderColor: "var(--border)",
+                color: "var(--text-secondary)",
+              }}
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1.5">Email</label>
+            <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-tertiary)" }}>
+              Email
+            </label>
             <input
               type="email"
               value="demo@numifi.app"
               disabled
-              className="w-full rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5 text-sm text-gray-400 cursor-not-allowed"
+              className="w-full rounded-xl border px-4 py-2.5 text-sm cursor-not-allowed opacity-60"
+              style={{
+                backgroundColor: "var(--input-bg)",
+                borderColor: "var(--border)",
+                color: "var(--text-secondary)",
+              }}
             />
           </div>
         </div>
-      </div>
+      </DashCard>
 
       {/* Plan */}
-      <div className="rounded-xl p-6" style={{ backgroundColor: "#334155" }}>
-        <h2 className="text-sm font-semibold text-white mb-3">Plan</h2>
+      <DashCard>
+        <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--text-primary)" }}>
+          Plan
+        </h2>
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-sm text-gray-300">Current Plan: <span className="font-semibold text-white">Preview (Free)</span></div>
-            <div className="text-xs text-gray-500 mt-0.5">Limited features. Upgrade for full access.</div>
+            <div className="text-sm" style={{ color: "var(--text-secondary)" }}>
+              Current Plan:{" "}
+              <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
+                Preview (Free)
+              </span>
+            </div>
+            <div className="text-xs mt-0.5" style={{ color: "var(--text-tertiary)" }}>
+              Limited features. Upgrade for full access.
+            </div>
           </div>
           <a
             href="/#pricing"
-            className="rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600 transition-colors"
+            className="rounded-full bg-blue px-5 py-2.5 text-[0.8125rem] font-semibold text-white transition-all duration-200 hover:bg-blue-hover hover:shadow-lg hover:shadow-blue/25"
           >
             Upgrade
           </a>
         </div>
-      </div>
+      </DashCard>
 
       {/* Data */}
-      <div className="rounded-xl p-6" style={{ backgroundColor: "#334155" }}>
-        <h2 className="text-sm font-semibold text-white mb-3">Data</h2>
-        <p className="text-xs text-gray-500 mb-4">
+      <DashCard>
+        <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--text-primary)" }}>
+          Data
+        </h2>
+        <p className="text-xs mb-4" style={{ color: "var(--text-tertiary)" }}>
           Permanently delete all uploaded documents and extracted data.
         </p>
-        <button className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-500/10 transition-colors">
+        <button className="inline-flex items-center gap-2 rounded-xl border border-red-500/30 px-4 py-2.5 text-sm font-medium text-red-500 hover:bg-red-500/5 transition-colors">
           <Trash2 size={14} />
           Delete all my data
         </button>
-      </div>
+      </DashCard>
 
-      <p className="text-xs text-gray-600 text-center">
+      <p className="text-xs text-center" style={{ color: "var(--text-tertiary)" }}>
         Full account management coming soon.
       </p>
     </div>
@@ -784,7 +976,7 @@ const TAB_TITLES: Record<Tab, string> = {
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen" style={{ backgroundColor: "#0F172A" }} />}>
+    <Suspense fallback={<div className="min-h-screen" style={{ backgroundColor: "var(--bg)" }} />}>
       <DashboardContent />
     </Suspense>
   );
@@ -806,16 +998,19 @@ function DashboardContent() {
   );
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#1E293B" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-alt)" }}>
       {showBanner && <DemoBanner onDismiss={() => setShowBanner(false)} />}
 
-      <div className="flex h-[calc(100vh-var(--banner-h,0px))]" style={{ "--banner-h": showBanner ? "44px" : "0px" } as React.CSSProperties}>
+      <div
+        className="flex"
+        style={{ minHeight: showBanner ? "calc(100vh - 44px)" : "100vh" }}
+      >
         <Sidebar tab={tab} onTabChange={setTab} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div className="flex-1 flex flex-col min-w-0">
           <TopBar title={TAB_TITLES[tab]} onMenuClick={() => setSidebarOpen(true)} />
 
-          <main className="flex-1 overflow-y-auto p-4 sm:p-6">
+          <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
             {tab === "home" && <HomeTab />}
             {tab === "documents" && <DocumentsTab />}
             {tab === "analysis" && <AnalysisTab />}
