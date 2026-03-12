@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import {
   Upload,
+  UploadCloud,
   BarChart3,
   MessageSquare,
   Sparkles,
@@ -244,6 +246,53 @@ function HeroMockup() {
   );
 }
 
+function HeroDropZone() {
+  const router = useRouter();
+  const [dragOver, setDragOver] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const goToConvert = useCallback(() => {
+    router.push("/convert");
+  }, [router]);
+
+  return (
+    <div
+      className={`mx-auto mt-14 lg:mt-16 max-w-2xl rounded-2xl border-2 border-dashed p-8 text-center transition-all duration-300 cursor-pointer ${
+        dragOver
+          ? "border-blue bg-blue/[0.06] scale-[1.01]"
+          : "border-white/[0.12] hover:border-white/[0.2] hover:bg-white/[0.01]"
+      }`}
+      onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+      onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
+      onDrop={(e) => { e.preventDefault(); goToConvert(); }}
+      onClick={() => inputRef.current?.click()}
+    >
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".pdf,.png,.jpg,.jpeg"
+        onChange={goToConvert}
+        className="hidden"
+      />
+      <div className={`flex h-12 w-12 mx-auto items-center justify-center rounded-2xl mb-4 transition-all duration-300 ${
+        dragOver ? "bg-blue/20 scale-110" : "bg-white/[0.04]"
+      }`}>
+        <UploadCloud
+          size={24}
+          className={`transition-colors duration-300 ${dragOver ? "text-blue" : ""}`}
+          style={dragOver ? {} : { color: "var(--text-tertiary)" }}
+        />
+      </div>
+      <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>
+        Drop a file to start converting
+      </p>
+      <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>
+        PDF, PNG, JPG — bank statements, invoices, receipts, tax forms
+      </p>
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section className="relative pt-32 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
@@ -283,10 +332,10 @@ function Hero() {
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="#waitlist"
+            href="/convert"
             className="group inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-hover hover:shadow-xl hover:shadow-blue/25 hover:scale-[1.02]"
           >
-            Join Waitlist
+            Try It Now
             <ArrowRight
               size={15}
               className="transition-transform duration-200 group-hover:translate-x-0.5"
@@ -316,6 +365,8 @@ function Hero() {
         </p>
 
         <HeroMockup />
+
+        <HeroDropZone />
       </div>
     </section>
   );
